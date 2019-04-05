@@ -1,19 +1,22 @@
 const validator = require('validator');
 
-const validateInput = {
-    errors: {},
+class validateInput {
+    constructor() {
+        this.errors = {}
+        this.login = this.login.bind(this);
+    }
     login(data) {
         if(validator.isEmpty(data.email)) {
-            errors.emailEmpty = 'Please provide an email address.';
+            this.errors.emailEmpty = 'Please provide an email address.';
         }
         if(!validator.isEmail(data.email)) {
-            errors.invalidEmail = 'Please provide a valid email address.';
+            this.errors.invalidEmail = 'Please provide a valid email address.';
         }
         if(validator.isEmpty(data.password)) {
-            errors.passwordEmpty = 'Please provide a password.';
+            this.errors.passwordEmpty = 'Please provide a password.';
         }
-        if(Reflect.ownKeys(errors).length > 0) {
-            return errors;
+        if(Reflect.ownKeys(this.errors).length > 0) {
+            return this.errors;
         } else {
             return true;
         }
