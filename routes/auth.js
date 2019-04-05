@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const inputValidation = require('../utils/validateInput');
 
 // ROUTE:   =>  /auth/register 
 // METHOD:  =>  POST

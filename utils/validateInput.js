@@ -23,4 +23,5 @@ class validateInput {
     }
 };
 
-module.exports = validateInput;
+const inputValidation = new validateInput();
+module.exports = inputValidation;
