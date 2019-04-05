@@ -32,8 +32,6 @@
   "devDependencies": {
     "concurrently": "^4.1.0",
     "dotenv": "^7.0.0",
-    "nodemon": "^1.18.10",
-    "tsc-watch": "^2.1.2",
-    "typescript": "^3.4.1"
+    "nodemon": "^1.18.10"
   }
 }
