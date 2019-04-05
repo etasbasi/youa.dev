@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 
 // App
 const app = express();
@@ -23,6 +23,10 @@ app.use('/api/auth', authRoute);
 app.use('/api/profile', profileRoute);
 
 // Sequelize
-const Sequelize = new sequelize(process.env.DB_URL, { dialect: 'postgres' });
+const sequelize = new Sequelize(process.env.DB_URL, { dialect: 'postgres' });
+sequelize.authenticate()
+    .then(() => console.log('Database connection established.'))
+    .catch(err => console.error(`Unable to connect to the database. Error trace: ${err}`));
 
+// Server Init
 app.listen(process.env.SERVER_PORT, () => console.log(`Server running on http://localhost:${process.env.SERVER_PORT}/`));
