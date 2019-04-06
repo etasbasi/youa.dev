@@ -45,7 +45,7 @@ router.post('/create', passport.authenticate('jwt', {
                 } else {
                     // Send an error message
                     res.status(400).json({
-                        error: "User already exists."
+                        error: "Profile already exists."
                     });
                 }
             })
@@ -56,20 +56,48 @@ router.post('/create', passport.authenticate('jwt', {
     }
 });
 
-// ROUTE:   =>  /api/profile/get/current 
+// ROUTE:   =>  /api/profile/current 
 // METHOD:  =>  GET
 // DESC:    =>  Get current user's profile 
-router.get('/get/current', passport.authenticate('jwt', {
+router.get('/current', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
-    //TODO: => Get current user's profile
+    Profile.findOne({
+            where: {
+                user_id: req.user.id
+            }
+        })
+        .then(profile => {
+            if (!profile) {
+                res.status(404).json({
+                    error: 'Profile not found.'
+                });
+            } else {
+                res.status(200).json(profile);
+            }
+        })
+        .catch(err => console.error(err));
 });
 
-// ROUTE:   =>  /api/profile/get/:id 
+// ROUTE:   =>  /api/profile/:id 
 // METHOD:  =>  GET
 // DESC:    =>  Get user's profile via ID
-router.get('/get/:id', (req, res) => {
-    //TODO: => Get user's profile via ID
+router.get('/:id', (req, res) => {
+    Profile.findOne({
+            where: {
+                user_id: req.params.id
+            }
+        })
+        .then(profile => {
+            if (!profile) {
+                res.status(404).json({
+                    error: 'Profile not found.'
+                });
+            } else {
+                res.status(200).json(profile);
+            }
+        })
+        .catch(err => console.error(err));
 });
 
 // ROUTE:   =>  /api/profile/edit 
@@ -78,16 +106,53 @@ router.get('/get/:id', (req, res) => {
 router.put('/edit', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
-    //TODO: => Edit user's profile
+    Profile.findOne({
+            where: {
+                user_id: req.user.id
+            }
+        })
+        .then(profile => {
+            if (!profile) {
+                res.status(404).json({
+                    error: 'Profile not found.'
+                });
+            } else {
+                profile.update({
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+                        profilePicture: req.body.profilePicture,
+                        website: req.body.website,
+                        github: req.body.github,
+                        linkedin: req.body.linkedin,
+                        dev: req.body.dev,
+                        stackoverflow: req.body.stackoverflow,
+                        biography: req.body.biography
+                    })
+                    .then(result => {
+                        res.status(200).json(result);
+                    })
+                    .catch(err => console.error(err));
+            }
+        })
 });
 
 // ROUTE:   =>  /api/profile/delete 
 // METHOD:  =>  DELETE
-// DESC:    =>  Delete user
+// DESC:    =>  Delete profile
 router.delete('/delete', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
-    //TODO: => Delete user
+    Profile.destroy({
+            where: {
+                id: req.body.id
+            }
+        })
+        // If the delete request was successful, send out a JSON object with the value of true
+        .then(() => res.status(200).json({
+            deleted: true
+        }))
+        // Else, log the produced error
+        .catch(err => console.error(err));
 });
 
 

@@ -34,5 +34,8 @@ Database.authenticate()
     .then(() => console.log('Database connection established.'))
     .catch(err => console.error('Connection refused. Error: ', err));
 
+// Sync
+Database.sync();
+
 // Server Init
 app.listen(process.env.SERVER_PORT, () => console.log(`Server running on http://localhost:${process.env.SERVER_PORT}/`));
