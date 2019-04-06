@@ -5,6 +5,7 @@ class validateInput {
         this.errors = {}
         this.login = this.login.bind(this);
         this.register = this.register.bind(this);
+        this.post = this.post.bind(this);
     }
     login(data) {
         this.errors = {};
@@ -56,6 +57,20 @@ class validateInput {
         }
         if (validator.isEmpty(data.lastName)) {
             this.errors.lastNameEmpty = 'Last name is required.';
+        }
+        if (Reflect.ownKeys(this.errors).length > 0) {
+            return this.errors;
+        } else {
+            return false;
+        }
+    }
+    post(data) {
+        this.errors = {};
+        if (validator.isEmpty(data.title)) {
+            this.errors.titleEmpty = 'Post title is required.';
+        }
+        if (validator.isEmpty(data.body)) {
+            this.errors.bodyEmpty = 'Post body is required.';
         }
         if (Reflect.ownKeys(this.errors).length > 0) {
             return this.errors;
