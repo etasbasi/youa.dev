@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 // App
 const app = express();
@@ -15,6 +16,10 @@ require('dotenv').config();
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Passport
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 // Routes
 app.use('/api/test', testRoute);

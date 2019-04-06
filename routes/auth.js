@@ -1,9 +1,12 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const inputValidation = require('../utils/validateInput');
 const User = require('../db/models/User');
 
-// TODO:    => Token implementation 
+// Dotenv
+require('dotenv').config();
 
 // ROUTE:   =>  /api/auth/register 
 // METHOD:  =>  POST
@@ -49,7 +52,6 @@ router.post('/register', (req, res) => {
 // METHOD:  =>  POST
 // DESC:    =>  Log in 
 router.post('/login', (req, res) => {
-    //TODO: => Token implementation
     // Check for input errors
     const inputErrors = inputValidation.login(req.body);
     // If no errors, proceed
@@ -72,8 +74,19 @@ router.post('/login', (req, res) => {
                             if(!match) {
                                 res.status(400).json({ error: 'Invalid password.' });
                             } else {
-                                //TODO: => Send an authorization token
-                                res.status(200).json({ loggedIn: match });
+                                const { id, email } = user;
+                                const payload = {
+                                    id, email
+                                };
+                                jwt.sign(payload, process.env.SECRET_OR_KEY, {
+                                    expiresIn: 86400
+                                }, (err, token) => {
+                                    if(err) {
+                                        console.error(err);
+                                    } else {
+                                        res.status(200).json({ loggedIn: true, token: `Bearer ${token}` });
+                                    }
+                                })
                             }
                         }
                     })
@@ -89,10 +102,9 @@ router.post('/login', (req, res) => {
 // ROUTE:   =>  /api/auth/current 
 // METHOD:  =>  GET
 // DESC:    =>  Get current user
-router.get('/current', (req, res) => {
-    //TODO: => Replace inputs with the Passport user objects
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
     // Check if user exists
-    User.findOne({ where: { id: req.body.id } })
+    User.findOne({ where: { id: req.user.id } })
         .then(user => {
             if(user) {
                 // If user exists, send the user object
@@ -109,11 +121,9 @@ router.get('/current', (req, res) => {
 // ROUTE:   =>  /api/auth/delete 
 // METHOD:  =>  DELETE
 // DESC:    =>  Delete user
-router.delete('/delete', (req, res) => {
-    //TODO: => Replace inputs with the Passport user objects
-    //TODO: => Refactor the delete request to look for an user first, and then delete it.
+router.delete('/delete', passport.authenticate('jwt', { session: false }), (req, res) => {
     // Find an user via ID and then delete it
-    User.destroy({ where: { id: req.body.id } })
+    User.destroy({ where: { id: req.user.id } })
         // If the delete request was successful, send out a JSON object with the value of true
         .then(() => res.status(200).json({ deleted: true }))
         // Else, log the produced error
