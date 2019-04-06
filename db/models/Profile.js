@@ -14,29 +14,33 @@ const Profile = Database.define('Profile', {
     handle: {
         type: Sequelize.STRING
     },
-    profilePicture_data: {
-        type: Sequelize.BLOB('long')
+    profilePicture: {
+        type: Sequelize.STRING,
+        defaultValue: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
     },
-    profilePicture_name: {
-        type: Sequelize.STRING
-    },
-    profilePicture_type: {
-        type: Sequelize.STRING
+    website: {
+        type: Sequelize.STRING,
+        defaultValue: ''
     },
     github: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: ''
     },
     linkedin: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: ''
     },
     dev: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: ''
     },
     stackoverflow: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: ''
     },
     biography: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: ''
     }
 });
 

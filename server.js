@@ -14,7 +14,9 @@ const profileRoute = require('./routes/profile');
 require('dotenv').config();
 
 // Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(bodyParser.json());
 
 // Passport
