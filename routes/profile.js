@@ -1,4 +1,3 @@
-const fs = require('fs');
 const router = require('express').Router();
 const passport = require('passport');
 const inputValidation = require('../utils/validateInput');
@@ -26,31 +25,20 @@ router.post('/create', passport.authenticate('jwt', {
             .then(profile => {
                 if (!profile) {
                     // If there's no profile, create a new one
-                    const {
-                        firstName,
-                        lastName,
-                        profilePicture,
-                        website,
-                        github,
-                        linkedin,
-                        dev,
-                        stackoverflow,
-                        biography
-                    } = req.body;
                     const randomHandleNumber = `${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
                     const handle = `${firstName.toLowerCase().replace(' ', '')}-${lastName.toLowerCase().replace(' ', '')}-${randomHandleNumber}`;
                     Profile.create({
                             user_id: id,
                             handle,
-                            firstName,
-                            lastName,
-                            profilePicture,
-                            website,
-                            github,
-                            linkedin,
-                            dev,
-                            stackoverflow,
-                            biography
+                            firstName: req.body.firstName,
+                            lastName: req.body.lastName,
+                            profilePicture: req.body.profilePicture,
+                            website: req.body.website,
+                            github: req.body.github,
+                            linkedin: req.body.linkedin,
+                            dev: req.body.dev,
+                            stackoverflow: req.body.stackoverflow,
+                            biography: req.body.biography
                         })
                         .then(profile => res.status(200).json(profile))
                         .catch(err => res.status(500).json(err))
