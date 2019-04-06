@@ -5,6 +5,9 @@ const Post = Database.define('Post', {
     user_id: {
         type: Sequelize.INTEGER
     },
+    handle: {
+        type: Sequelize.STRING
+    },
     title: {
         type: Sequelize.STRING
     },
