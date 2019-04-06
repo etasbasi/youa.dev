@@ -3,11 +3,12 @@ const bcrypt = require('bcrypt');
 const inputValidation = require('../utils/validateInput');
 const User = require('../db/models/User');
 
+// TODO:    => Token implementation 
+
 // ROUTE:   =>  /auth/register 
 // METHOD:  =>  POST
 // DESC:    =>  Register a new user
 router.post('/register', (req, res) => {
-    //TODO: => Register a new user
     // Check if the provided input is valid
     const inputErrors = inputValidation.register(req.body);
     // If the function returns false, in regards of no errors being returned, proceed
@@ -48,7 +49,7 @@ router.post('/register', (req, res) => {
 // METHOD:  =>  POST
 // DESC:    =>  Log in 
 router.post('/login', (req, res) => {
-    //TODO: => Log in
+    //TODO: => Token implementation
     // Check for input errors
     const inputErrors = inputValidation.login(req.body);
     // If no errors, proceed
@@ -82,22 +83,35 @@ router.post('/login', (req, res) => {
         // Return input errors
         res.status(400).json(inputErrors);
     }
-    // Check if user exists
 
 });
 
 // ROUTE:   =>  /auth/current 
-// METHOD:  =>  POST
+// METHOD:  =>  GET
 // DESC:    =>  Get current user
 router.get('/current', (req, res) => {
-    //TODO: => Get current user
+    // Check if user exists
+    User.findOne({ where: { id: req.body.id } })
+        .then(user => {
+            if(user) {
+                // If user exists, send the user object
+                const { id, email, createdAt } = user;
+                const response = { id, email, createdAt };
+                res.json(response);
+            } else {
+                // Return an error
+                res.status(400).json({ error: 'User not found.' });
+            }
+        })
 });
 
 // ROUTE:   =>  /auth/delete 
 // METHOD:  =>  DELETE
 // DESC:    =>  Delete user
 router.delete('/delete', (req, res) => {
-    //TODO: => Delete user
+    User.destroy({ where: { id: req.body.id } })
+        .then(() => res.status(200).json({ deleted: true }))
+        .catch(err => console.log(err));
 });
 
 module.exports = router;
