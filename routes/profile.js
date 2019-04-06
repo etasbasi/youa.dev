@@ -1,6 +1,6 @@
 const fs = require('fs');
 const router = require('express').Router();
-const Profile = require('../models/Profile');
+const Profile = require('../db/models/Profile');
 
 // ROUTE:   =>  /profile/create 
 // METHOD:  =>  POST
