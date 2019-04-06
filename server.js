@@ -9,6 +9,7 @@ const app = express();
 const testRoute = require('./routes/test');
 const authRoute = require('./routes/auth');
 const profileRoute = require('./routes/profile');
+const postsRoute = require('./routes/posts');
 
 // Dotenv
 require('dotenv').config();
@@ -27,6 +28,7 @@ require('./config/passport')(passport);
 app.use('/api/test', testRoute);
 app.use('/api/auth', authRoute);
 app.use('/api/profile', profileRoute);
+app.use('/api/posts', postsRoute);
 
 // Database
 const Database = require('./db/Database');
