@@ -111,9 +111,13 @@ router.get('/current', (req, res) => {
 // DESC:    =>  Delete user
 router.delete('/delete', (req, res) => {
     //TODO: => Replace inputs with the Passport user objects
+    //TODO: => Refactor the delete request to look for an user first, and then delete it.
+    // Find an user via ID and then delete it
     User.destroy({ where: { id: req.body.id } })
+        // If the delete request was successful, send out a JSON object with the value of true
         .then(() => res.status(200).json({ deleted: true }))
-        .catch(err => console.log(err));
+        // Else, log the produced error
+        .catch(err => console.error(err));
 });
 
 module.exports = router;
