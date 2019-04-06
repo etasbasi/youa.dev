@@ -12,10 +12,12 @@ const Post = Database.define('Post', {
         type: Sequelize.STRING
     },
     comments: {
-        type: Sequelize.HSTORE
+        type: Sequelize.HSTORE,
+        defaultValue: {}
     },
     likes: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0
     }
 })
 
