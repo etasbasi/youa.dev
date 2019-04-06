@@ -5,7 +5,7 @@ const User = require('../db/models/User');
 
 // TODO:    => Token implementation 
 
-// ROUTE:   =>  /auth/register 
+// ROUTE:   =>  /api/auth/register 
 // METHOD:  =>  POST
 // DESC:    =>  Register a new user
 router.post('/register', (req, res) => {
@@ -45,7 +45,7 @@ router.post('/register', (req, res) => {
     }
 });
 
-// ROUTE:   =>  /auth/login 
+// ROUTE:   =>  /api/auth/login 
 // METHOD:  =>  POST
 // DESC:    =>  Log in 
 router.post('/login', (req, res) => {
@@ -86,10 +86,11 @@ router.post('/login', (req, res) => {
 
 });
 
-// ROUTE:   =>  /auth/current 
+// ROUTE:   =>  /api/auth/current 
 // METHOD:  =>  GET
 // DESC:    =>  Get current user
 router.get('/current', (req, res) => {
+    //TODO: => Replace inputs with the Passport user objects
     // Check if user exists
     User.findOne({ where: { id: req.body.id } })
         .then(user => {
@@ -105,10 +106,11 @@ router.get('/current', (req, res) => {
         })
 });
 
-// ROUTE:   =>  /auth/delete 
+// ROUTE:   =>  /api/auth/delete 
 // METHOD:  =>  DELETE
 // DESC:    =>  Delete user
 router.delete('/delete', (req, res) => {
+    //TODO: => Replace inputs with the Passport user objects
     User.destroy({ where: { id: req.body.id } })
         .then(() => res.status(200).json({ deleted: true }))
         .catch(err => console.log(err));
