@@ -10,6 +10,26 @@ router.post('/create', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
     //TODO: => Create a new post
+    const inputErrors = inputValidation.post(req.body);
+    if (!inputErrors) {
+        Post.create({
+                user_id: req.user.id,
+                title: req.body.title,
+                body: req.body.body
+            })
+            .then(post => {
+                if (post) {
+                    res.status(200).json(post);
+                } else {
+                    res.status(400).json({
+                        error: 'An error has occured.'
+                    });
+                }
+            })
+            .catch(err => console.error(err));
+    } else {
+        res.status(400).json(inputErrors);
+    }
 });
 
 // ROUTE:   =>  /api/posts/:id 
