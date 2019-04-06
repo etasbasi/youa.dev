@@ -9,11 +9,11 @@ const Post = require('../db/models/Post');
 router.post('/create', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
-    //TODO: => Create a new post
     const inputErrors = inputValidation.post(req.body);
     if (!inputErrors) {
         Post.create({
                 user_id: req.user.id,
+                handle: `${req.body.title.toLowerCase().replace(' ', '-')}`,
                 title: req.body.title,
                 body: req.body.body
             })
@@ -32,44 +32,88 @@ router.post('/create', passport.authenticate('jwt', {
     }
 });
 
-// ROUTE:   =>  /api/posts/:id 
+// ROUTE:   =>  /api/posts/:handle 
 // METHOD:  =>  GET
-// DESC:    =>  Get a post via ID
-router.get('/:id', (req, res) => {
-    //TODO: => Get a post via ID
+// DESC:    =>  Get a post via handle
+router.get('/:handle', (req, res) => {
+    Post.findOne({
+            where: {
+                handle: req.params.handle
+            }
+        })
+        .then(post => {
+            if (post) {
+                res.status(200).json(post);
+            } else {
+                res.status(404).json({
+                    error: 'Post not found.'
+                });
+            }
+        })
+        .catch(err => console.error(err));
 });
 
-// ROUTE:   =>  /api/posts/edit 
+// ROUTE:   =>  /api/posts/:handle/edit 
 // METHOD:  =>  PUT
 // DESC:    =>  Edit a post
-router.put('/edit', passport.authenticate('jwt', {
+router.put('/:handle/edit', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
-    //TODO: => Edit a post
+    Post.findOne({
+            where: {
+                handle: req.params.handle,
+                user_id: req.user.id
+            }
+        })
+        .then(profile => {
+            if (profile) {
+                profile.update({
+                    handle: `${req.body.title.toLowerCase().replace(' ', '-')}`,
+                    title: req.body.title,
+                    body: req.body.body
+                });
+            } else {
+                res.status(404).json({
+                    error: 'Post not found.'
+                });
+            }
+        })
+        .catch(err => console.error(err));
 });
 
-// ROUTE:   =>  /api/posts/delete 
+// ROUTE:   =>  /api/posts/:handle/delete 
 // METHOD:  =>  DELETE
 // DESC:    =>  Delete a post
-router.delete('/delete', passport.authenticate('jwt', {
+router.delete('/:handle/delete', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
-    //TODO: => Delete a post
+    Post.destroy({
+            where: {
+                handle: req.params.handle,
+                user_id: req.user.id
+            }
+        })
+        // If the delete request was successful, send out a JSON object with the value of true
+        .then(() => res.status(200).json({
+            deleted: true
+        }))
+        // Else, log the produced error
+        .catch(err => console.error(err));
 });
 
-// ROUTE:   =>  /api/posts/:id/comment 
+// ROUTE:   =>  /api/posts/:handle/comment 
 // METHOD:  =>  PATCH
 // DESC:    =>  Comment on a post
-router.patch('/:id/comment', passport.authenticate('jwt', {
+router.patch('/:handle/comment', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
     //TODO: => Comment on a post
 });
 
-// ROUTE:   =>  /api/posts/:id/like 
+// ROUTE:   =>  /api/posts/:handle/like 
 // METHOD:  =>  PATCH
 // DESC:    =>  Like a post
-router.patch('/:id/like', passport.authenticate('jwt', {
+router.patch('/:handle/like', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
     //TODO: => Like a post
