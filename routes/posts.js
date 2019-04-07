@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const inputValidation = require('../utils/validateInput');
+const handleErrors = require('../utils/handleErrors');
 const Post = require('../db/models/Post');
 const Comment = require('../db/models/Comment');
 const Like = require('../db/models/Like');
@@ -23,9 +24,7 @@ router.post('/create', passport.authenticate('jwt', {
                 if (post) {
                     res.status(200).json(post);
                 } else {
-                    res.status(400).json({
-                        error: 'An error has occured.'
-                    });
+                    res.status(400).json(handleErrors('An error has occured.'));
                 }
             })
             .catch(err => console.error(err));
@@ -47,9 +46,7 @@ router.get('/:handle', (req, res) => {
             if (post) {
                 res.status(200).json(post);
             } else {
-                res.status(404).json({
-                    error: 'Post not found.'
-                });
+                res.status(404).json(handleErrors('Post not found.'));
             }
         })
         .catch(err => console.error(err));
@@ -79,9 +76,7 @@ router.put('/:handle/edit', passport.authenticate('jwt', {
                     })
                     .catch(err => console.error(err));;
             } else {
-                res.status(404).json({
-                    error: 'Post not found.'
-                });
+                res.status(404).json(handleErrors('Post not found.'));
             }
         })
         .catch(err => console.error(err));
@@ -127,15 +122,11 @@ router.get('/:handle/comment/get', (req, res) => {
                         if (comments) {
                             res.status(200).json(comments);
                         } else {
-                            res.status(404).json({
-                                error: 'No comments found.'
-                            });
+                            res.status(404).json(handleErrors('No comments found.'));
                         }
                     })
             } else {
-                res.status(404).json({
-                    error: 'Post not found.'
-                });
+                res.status(404).json(handleErrors('Post not found.'));
             }
         })
 });
@@ -163,9 +154,7 @@ router.put('/:handle/comment/create', passport.authenticate('jwt', {
                         .then(comment => res.status(200).json(comment))
                         .catch(err => console.error(err));
                 } else {
-                    res.status(404).json({
-                        error: 'Post not found.'
-                    });
+                    res.status(404).json(handleErrors('Post not found.'));
                 }
             })
             .catch(err => console.error(err));
@@ -203,15 +192,11 @@ router.patch('/:handle/comment/edit', passport.authenticate('jwt', {
                                 })
                                 .catch(err => console.error(err));
                         } else {
-                            res.status(404).json({
-                                error: 'Comment not found.'
-                            });
+                            res.status(404).json(handleErrors('Comment not found.'));
                         }
                     })
             } else {
-                res.status(404).json({
-                    error: 'Post not found.'
-                });
+                res.status(404).json(handleErrors('Post not found.'));
             }
         })
         .catch(err => console.error(err));
@@ -244,15 +229,11 @@ router.delete('/:handle/comment/delete', passport.authenticate('jwt', {
                                 }))
                                 .catch(err => console.error(err));
                         } else {
-                            res.status(404).json({
-                                error: 'Comment not found.'
-                            });
+                            res.status(404).json(handleErrors('Comment not found.'));
                         }
                     })
             } else {
-                res.status(404).json({
-                    error: 'Post not found.'
-                });
+                res.status(404).json(handleErrors('Post not found.'));
             }
         })
 });
@@ -276,9 +257,7 @@ router.get('/:handle/like/fetch', (req, res) => {
                     .then(likes => res.status(200).json(likes))
                     .catch(err => console.error(err));
             } else {
-                res.status(404).json({
-                    error: 'Post not found.'
-                });
+                res.status(404).json(handleErrors('Post not found.'));
             }
         })
 })
@@ -322,9 +301,7 @@ router.patch('/:handle/like', passport.authenticate('jwt', {
                         }
                     })
             } else {
-                res.status(404).json({
-                    error: 'Post not found.'
-                });
+                res.status(404).json(handleErrors('Post not found.'));
             }
         })
 });

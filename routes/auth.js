@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const inputValidation = require('../utils/validateInput');
+const handleErrors = require('../utils/handleErrors');
 const User = require('../db/models/User');
 
 // Dotenv
@@ -41,14 +42,12 @@ router.post('/register', (req, res) => {
                                     password: hash
                                 })
                                 .then(user => res.status(200).json(user))
-                                .catch(err => res.status(500).json(err))
+                                .catch(err => console.error(err))
                         }
                     })
                 } else {
                     // Send an error message
-                    res.status(400).json({
-                        error: "User already exists."
-                    });
+                    res.status(400).json(handleErrors('User already exists.'));
                 }
             })
             .catch(err => console.error(err));
@@ -79,9 +78,7 @@ router.post('/login', (req, res) => {
             .then(user => {
                 // Send error message if there's no user
                 if (!user) {
-                    res.status(404).json({
-                        error: 'User not found.'
-                    })
+                    res.status(404).json(handleErrors('User not found.'));
                 } else {
                     // Compare provided password with the hash
                     bcrypt.compare(password, user.password, (err, match) => {
@@ -91,9 +88,7 @@ router.post('/login', (req, res) => {
                         } else {
                             // If no match, send an error
                             if (!match) {
-                                res.status(400).json({
-                                    error: 'Invalid password.'
-                                });
+                                res.status(400).json(handleErrors('Invalid password.'));
                             } else {
                                 const {
                                     type,
@@ -157,9 +152,7 @@ router.get('/current', passport.authenticate('jwt', {
                 res.json(response);
             } else {
                 // Return an error
-                res.status(400).json({
-                    error: 'User not found.'
-                });
+                res.status(400).json(handleErrors('User not found.'));
             }
         })
 });
