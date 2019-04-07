@@ -146,27 +146,32 @@ router.get('/:handle/comment/get', (req, res) => {
 router.put('/:handle/comment/create', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
-    Post.findOne({
-            where: {
-                handle: req.params.handle
-            }
-        })
-        .then(post => {
-            if (post) {
-                Comment.create({
-                        user_id: req.user.id,
-                        post_id: post.id,
-                        body: req.body.body
-                    })
-                    .then(comment => res.status(200).json(comment))
-                    .catch(err => console.error(err));
-            } else {
-                res.status(404).json({
-                    error: 'Post not found.'
-                });
-            }
-        })
-        .catch(err => console.error(err));
+    const inputErrors = inputValidation.comment(req.body);
+    if (!inputErrors) {
+        Post.findOne({
+                where: {
+                    handle: req.params.handle
+                }
+            })
+            .then(post => {
+                if (post) {
+                    Comment.create({
+                            user_id: req.user.id,
+                            post_id: post.id,
+                            body: req.body.body
+                        })
+                        .then(comment => res.status(200).json(comment))
+                        .catch(err => console.error(err));
+                } else {
+                    res.status(404).json({
+                        error: 'Post not found.'
+                    });
+                }
+            })
+            .catch(err => console.error(err));
+    } else {
+        res.status(400).json(inputErrors);
+    }
 });
 
 // ROUTE:   =>  /api/posts/:handle/comment/edit 
