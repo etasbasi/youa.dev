@@ -3,7 +3,8 @@ const Database = require('../Database');
 
 const User = Database.define('User', {
     type: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'USER'
     },
     email: {
         type: Sequelize.STRING
@@ -12,7 +13,8 @@ const User = Database.define('User', {
         type: Sequelize.STRING
     },
     verified: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
 })
 
