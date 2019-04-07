@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const config = require('./config/config');
 
 // App
 const app = express();
@@ -11,9 +12,6 @@ const authRoute = require('./routes/auth');
 const profileRoute = require('./routes/profile');
 const postsRoute = require('./routes/posts');
 const supportRoute = require('./routes/support');
-
-// Dotenv
-require('dotenv').config();
 
 // Middleware
 app.use(bodyParser.urlencoded({
@@ -39,8 +37,5 @@ Database.authenticate()
     .then(() => console.log('Database connection established.'))
     .catch(err => console.error('Connection refused. Error: ', err));
 
-// Sync
-Database.sync();
-
 // Server Init
-app.listen(process.env.SERVER_PORT, () => console.log(`Server running on http://localhost:${process.env.SERVER_PORT}/`));
+app.listen(config.SERVER_PORT, () => console.log(`Server running on http://localhost:${config.SERVER_PORT}/`));

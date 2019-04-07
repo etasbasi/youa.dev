@@ -4,10 +4,8 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const inputValidation = require('../utils/validateInput');
 const handleErrors = require('../utils/handleErrors');
+const config = require('../config/config');
 const User = require('../db/models/User');
-
-// Dotenv
-require('dotenv').config();
 
 // ROUTE:   =>  /api/auth/register 
 // METHOD:  =>  POST
@@ -100,7 +98,7 @@ router.post('/login', (req, res) => {
                                     id,
                                     email
                                 };
-                                jwt.sign(payload, process.env.SECRET_OR_KEY, {
+                                jwt.sign(payload, config.SECRET_OR_KEY, {
                                     expiresIn: 86400
                                 }, (err, token) => {
                                     if (err) {
