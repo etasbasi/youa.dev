@@ -11,20 +11,22 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const send = data => {
-    const message = {
-        from: data.from,
-        to: data.to,
-        subject: data.subject,
-        text: data.text
-    };
-    transporter.sendMail(message, (err, info) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(info);
-        }
-    })
-};
+const mail = {
+    send(data) {
+        const message = {
+            from: data.from,
+            to: data.to,
+            subject: data.subject,
+            text: data.text
+        };
+        transporter.sendMail(message, (err, info) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(info);
+            }
+        })
+    }
+}
 
-module.exports = send;
+module.exports = mail;
