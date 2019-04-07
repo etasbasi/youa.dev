@@ -13,14 +13,6 @@ const Post = Database.define('Post', {
     },
     body: {
         type: Sequelize.STRING
-    },
-    comments: {
-        type: Sequelize.HSTORE,
-        defaultValue: {}
-    },
-    likes: {
-        type: Sequelize.HSTORE,
-        defaultValue: {}
     }
 })
 
