@@ -78,6 +78,23 @@ class validateInput {
             return false;
         }
     }
+    comment(data) {
+        this.errors = {};
+        if (validator.isEmpty(data.body)) {
+            this.errors.commentEmpty = 'Empty comments are not allowed.';
+        }
+        if (!validator.isLength(data.body, {
+                min: 3,
+                max: 200
+            })) {
+            this.errors.commentLength = 'Comments should be between 3 and 200 characters long.';
+        }
+        if (Reflect.ownKeys(this.errors).length > 0) {
+            return this.errors;
+        } else {
+            return false;
+        }
+    }
 };
 
 const inputValidation = new validateInput();
