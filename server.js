@@ -10,6 +10,7 @@ const testRoute = require('./routes/test');
 const authRoute = require('./routes/auth');
 const profileRoute = require('./routes/profile');
 const postsRoute = require('./routes/posts');
+const supportRoute = require('./routes/support');
 
 // Dotenv
 require('dotenv').config();
@@ -29,6 +30,8 @@ app.use('/api/test', testRoute);
 app.use('/api/auth', authRoute);
 app.use('/api/profile', profileRoute);
 app.use('/api/posts', postsRoute);
+app.use('/api/support', supportRoute);
+
 
 // Database
 const Database = require('./db/Database');
