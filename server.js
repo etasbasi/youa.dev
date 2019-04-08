@@ -37,5 +37,8 @@ Database.authenticate()
     .then(() => console.log('Database connection established.'))
     .catch(err => console.error('Connection refused. Error: ', err));
 
+//TODO: => Remove this function - ADMIN ONLY
+Database.sync();
+
 // Server Init
 app.listen(config.SERVER_PORT, () => console.log(`Server running on http://localhost:${config.SERVER_PORT}/`));

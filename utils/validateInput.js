@@ -3,13 +3,26 @@ const validator = require('validator');
 class validateInput {
     constructor() {
         this.errors = {}
+        this.reset = this.reset.bind(this);
+        this.check = this.check.bind(this);
         this.login = this.login.bind(this);
         this.register = this.register.bind(this);
         this.post = this.post.bind(this);
         this.password = this.password.bind(this);
+        this.ticket = this.ticket.bind(this);
+    }
+    reset() {
+        this.errors = {};
+    }
+    check() {
+        if (Reflect.ownKeys(this.errors).length > 0) {
+            return this.errors;
+        } else {
+            return false;
+        }
     }
     login(data) {
-        this.errors = {};
+        this.reset();
         if (validator.isEmpty(data.email)) {
             this.errors.emailEmpty = 'Please provide an email address.';
         }
@@ -19,14 +32,10 @@ class validateInput {
         if (validator.isEmpty(data.password)) {
             this.errors.passwordEmpty = 'Please provide a password.';
         }
-        if (Reflect.ownKeys(this.errors).length > 0) {
-            return this.errors;
-        } else {
-            return false;
-        }
+        return this.check();
     }
     register(data) {
-        this.errors = {};
+        this.reset();
         if (validator.isEmpty(data.email)) {
             this.errors.emailEmpty = "Please provide an email address.";
         }
@@ -45,42 +54,30 @@ class validateInput {
         if (data.password !== data.confirmPassword) {
             this.errors.passwordsNotMatching = "Passwords are not matching.";
         }
-        if (Reflect.ownKeys(this.errors).length > 0) {
-            return this.errors;
-        } else {
-            return false;
-        }
+        return this.check();
     }
     profile(data) {
-        this.errors = {};
+        this.reset();
         if (validator.isEmpty(data.firstName)) {
             this.errors.firstNameEmpty = 'First name is required.';
         }
         if (validator.isEmpty(data.lastName)) {
             this.errors.lastNameEmpty = 'Last name is required.';
         }
-        if (Reflect.ownKeys(this.errors).length > 0) {
-            return this.errors;
-        } else {
-            return false;
-        }
+        return this.check();
     }
     post(data) {
-        this.errors = {};
+        this.reset();
         if (validator.isEmpty(data.title)) {
             this.errors.titleEmpty = 'Post title is required.';
         }
         if (validator.isEmpty(data.body)) {
             this.errors.bodyEmpty = 'Post body is required.';
         }
-        if (Reflect.ownKeys(this.errors).length > 0) {
-            return this.errors;
-        } else {
-            return false;
-        }
+        return this.check();
     }
     comment(data) {
-        this.errors = {};
+        this.reset();
         if (validator.isEmpty(data.body)) {
             this.errors.commentEmpty = 'Empty comments are not allowed.';
         }
@@ -90,14 +87,10 @@ class validateInput {
             })) {
             this.errors.commentLength = 'Comments should be between 3 and 200 characters long.';
         }
-        if (Reflect.ownKeys(this.errors).length > 0) {
-            return this.errors;
-        } else {
-            return false;
-        }
+        return this.check();
     }
     password(data) {
-        this.errors = {};
+        this.reset();
         if (validator.isEmpty(data.password)) {
             this.errors.passwordEmpty = "Please provide a password.";
         }
@@ -110,11 +103,17 @@ class validateInput {
         if (data.password !== data.confirmPassword) {
             this.errors.passwordsNotMatching = "Passwords are not matching.";
         }
-        if (Reflect.ownKeys(this.errors).length > 0) {
-            return this.errors;
-        } else {
-            return false;
+        return this.check();
+    }
+    ticket(data) {
+        this.reset();
+        if (validator.isEmpty(data.subject)) {
+            this.errors.subjectEmpty = 'A ticket subject is required.';
         }
+        if (validator.isEmpty(data.body)) {
+            this.errors.ticketEmpty = 'Empty tickets are not allowed.';
+        }
+        return this.check();
     }
 };
 
