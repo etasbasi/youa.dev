@@ -7,10 +7,13 @@ const handleErrors = require('../utils/handleErrors');
 const config = require('../config/config');
 const User = require('../db/models/User');
 
+// TODO:    =>  Implement the mail module
+
 // ROUTE:   =>  /api/auth/register 
 // METHOD:  =>  POST
 // DESC:    =>  Register a new user
 router.post('/register', (req, res) => {
+    //TODO: =>  Send out a verification email to the new user
     // Check if the provided input is valid
     const inputErrors = inputValidation.register(req.body);
     // If the function returns false, in regards of no errors being returned, proceed
