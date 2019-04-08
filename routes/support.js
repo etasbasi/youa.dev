@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const passport = require('passport');
+const bcrypt = require('bcrypt');
 const inputValidation = require('../utils/validateInput');
 const handleErrors = require('../utils/handleErrors');
 const Report = require('../db/models/Report');
+const User = require('../db/models/User');
 
 // TODO:    =>  Implement the mail module
 
@@ -31,6 +33,41 @@ router.post('/report', passport.authenticate('jwt', {
     } else {
         res.status(400).json(inputErrors);
     }
-})
+});
+
+// ROUTE:   =>  /api/support/password 
+// METHOD:  =>  PATCH
+// DESC:    =>  Password Recovery
+router.patch('/password', (req, res) => {
+    //TODO: =>  Mailing system, replace query with an actual recovery token
+    User.findOne({
+            where: {
+                email: req.body.email
+            }
+        })
+        .then(user => {
+            if (user) {
+                const inputErrors = inputValidation.password(req.body);
+                if (!inputErrors) {
+                    bcrypt.hash(req.body.password, 10, (err, encrypted) => {
+                        if (err) {
+                            res.status(400).json(handleErrors('An error has occured.'));
+                        } else {
+                            user.update({
+                                    password: encrypted
+                                })
+                                .then(result => res.status(200).json(result))
+                                .catch(err => console.error(err));
+                        }
+                    })
+                } else {
+                    res.status(400).json(inputErrors);
+                }
+            } else {
+                res.status(404).json(handleErrors('User has not been found.'));
+            }
+        })
+});
+
 
 module.exports = router;
