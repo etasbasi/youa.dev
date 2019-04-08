@@ -12,7 +12,7 @@ const Ticket = require('../db/models/Ticket');
 // ROUTE:   =>  /api/support/report 
 // METHOD:  =>  POST
 // DESC:    =>  Report an user
-//TODO:     =>  Send out a confirmation email to the user
+// TODO:    =>  Send out a confirmation email to the user
 router.post('/report', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
@@ -39,7 +39,7 @@ router.post('/report', passport.authenticate('jwt', {
 // ROUTE:   =>  /api/support/ticket 
 // METHOD:  =>  POST
 // DESC:    =>  Support tickets
-//TODO:     =>  Send out a confirmation email to the user
+// TODO:    =>  Send out a confirmation email to the user
 router.post('/ticket', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
@@ -65,7 +65,7 @@ router.post('/ticket', passport.authenticate('jwt', {
 // ROUTE:   =>  /api/support/password 
 // METHOD:  =>  PATCH
 // DESC:    =>  Password Recovery
-//TODO:     =>  Mailing system, replace query with an actual recovery token
+// TODO:    =>  Mailing system, replace query with an actual recovery token
 router.patch('/password', (req, res) => {
     User.findOne({
             where: {
