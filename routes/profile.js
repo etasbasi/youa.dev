@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
+const toolkit = require('../utils/toolkit');
 const inputValidation = require('../utils/validateInput');
-const handleErrors = require('../utils/handleErrors');
 const Profile = require('../db/models/Profile');
 
 // ROUTE:   =>  /api/profile/create 
@@ -41,17 +41,19 @@ router.post('/create', passport.authenticate('jwt', {
                             stackoverflow: req.body.stackoverflow,
                             biography: req.body.biography
                         })
-                        .then(profile => res.status(200).json(profile))
-                        .catch(err => res.status(500).json(err))
+                        .then(profile => {
+                            return toolkit.handler(req, res, 200, profile);
+                        })
+                        .catch(err => console.error(err));
                 } else {
                     // Send an error message
-                    res.status(400).json(handleErrors('Profile already exists.'));
+                    return toolkit.handler(req, res, 403, 'You already have a profile.');
                 }
             })
             .catch(err => console.error(err));
     } else {
         // Otherwise, return a JSON object containing all the errors
-        res.status(400).json(inputErrors);
+        return toolkit.handler(req, res, 400, inputErrors);
     }
 });
 
@@ -68,9 +70,9 @@ router.get('/current', passport.authenticate('jwt', {
         })
         .then(profile => {
             if (!profile) {
-                res.status(404).json(handleErrors('Profile not found.'));
+                return toolkit.handler(req, res, 404, 'You do not have a profile.');
             } else {
-                res.status(200).json(profile);
+                return toolkit.handler(req, res, 200, profile);
             }
         })
         .catch(err => console.error(err));
@@ -87,9 +89,9 @@ router.get('/:id', (req, res) => {
         })
         .then(profile => {
             if (!profile) {
-                res.status(404).json(handleErrors('Profile not found.'));
+                return toolkit.handler(req, res, 404, 'Profile not found.');
             } else {
-                res.status(200).json(profile);
+                return toolkit.handler(req, res, 200, profile);
             }
         })
         .catch(err => console.error(err));
@@ -108,7 +110,7 @@ router.put('/edit', passport.authenticate('jwt', {
         })
         .then(profile => {
             if (!profile) {
-                res.status(404).json(handleErrors('Profile not found.'));
+                return toolkit.handler(req, res, 404, 'Profile not found.');
             } else {
                 profile.update({
                         firstName: req.body.firstName,
@@ -122,7 +124,7 @@ router.put('/edit', passport.authenticate('jwt', {
                         biography: req.body.biography
                     })
                     .then(result => {
-                        res.status(200).json(result);
+                        return toolkit.handler(req, res, 200, result);
                     })
                     .catch(err => console.error(err));
             }
@@ -141,10 +143,9 @@ router.delete('/delete', passport.authenticate('jwt', {
             }
         })
         // If the delete request was successful, send out a JSON object with the value of true
-        .then(() => res.status(200).json({
-            deleted: true
-        }))
-        // Else, log the produced error
+        .then(() => {
+            return toolkit.handler(req, res, 200, 'Profile deleted.');
+        })
         .catch(err => console.error(err));
 });
 

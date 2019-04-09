@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const inputValidation = require('../utils/validateInput');
-const handleErrors = require('../utils/handleErrors');
 const config = require('../config/config');
+const toolkit = require('../utils/toolkit');
 const User = require('../db/models/User');
 
 // TODO:    =>  Implement the mail module
@@ -29,8 +29,8 @@ router.post('/register', (req, res) => {
                 }
             })
             .then(user => {
+                // If there's no user, register a new one
                 if (!user) {
-                    // If there's no user, register a new one
                     // Hash the password
                     bcrypt.hash(password, 10, (err, hash) => {
                         if (err) {
@@ -42,19 +42,21 @@ router.post('/register', (req, res) => {
                                     email,
                                     password: hash
                                 })
-                                .then(user => res.status(200).json(user))
+                                .then(user => {
+                                    return toolkit.handler(req, res, 200, user)
+                                })
                                 .catch(err => console.error(err))
                         }
                     })
-                } else {
                     // Send an error message
-                    res.status(400).json(handleErrors('User already exists.'));
+                } else {
+                    return toolkit.handler(req, res, 400, 'User already exists');
                 }
             })
             .catch(err => console.error(err));
-    } else {
         // Otherwise, return a JSON object containing all the errors
-        res.status(400).json(inputErrors);
+    } else {
+        return toolkit.handler(req, res, 400, inputErrors);
     }
 });
 
@@ -79,7 +81,7 @@ router.post('/login', (req, res) => {
             .then(user => {
                 // Send error message if there's no user
                 if (!user) {
-                    res.status(404).json(handleErrors('User not found.'));
+                    return toolkit.handler(req, res, 404, 'User not found');
                 } else {
                     // Compare provided password with the hash
                     bcrypt.compare(password, user.password, (err, match) => {
@@ -89,7 +91,7 @@ router.post('/login', (req, res) => {
                         } else {
                             // If no match, send an error
                             if (!match) {
-                                res.status(400).json(handleErrors('Invalid password.'));
+                                return toolkit.handler(req, res, 400, 'Incorrect password.');
                             } else {
                                 const {
                                     type,
@@ -107,7 +109,7 @@ router.post('/login', (req, res) => {
                                     if (err) {
                                         console.error(err);
                                     } else {
-                                        res.status(200).json({
+                                        return toolkit.handler(req, res, 200, {
                                             loggedIn: true,
                                             token: `Bearer ${token}`
                                         });
@@ -120,7 +122,7 @@ router.post('/login', (req, res) => {
             })
     } else {
         // Return input errors
-        res.status(400).json(inputErrors);
+        return toolkit.handler(req, res, 400, inputErrors);
     }
 
 });
@@ -150,10 +152,10 @@ router.get('/current', passport.authenticate('jwt', {
                     email,
                     createdAt
                 };
-                res.json(response);
+                return toolkit.handler(req, res, 200, response);
             } else {
                 // Return an error
-                res.status(400).json(handleErrors('User not found.'));
+                return toolkit.handler(req, res, 404, 'User not found');;
             }
         })
 });
@@ -171,9 +173,9 @@ router.delete('/delete', passport.authenticate('jwt', {
             }
         })
         // If the delete request was successful, send out a JSON object with the value of true
-        .then(() => res.status(200).json({
-            deleted: true
-        }))
+        .then(() => {
+            return toolkit.handler(req, res, 200, 'Account deleted.')
+        })
         // Else, log the produced error
         .catch(err => console.error(err));
 });

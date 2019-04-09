@@ -2,7 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const inputValidation = require('../utils/validateInput');
-const handleErrors = require('../utils/handleErrors');
+const toolkit = require('../utils/toolkit');
 const Report = require('../db/models/Report');
 const User = require('../db/models/User');
 const Ticket = require('../db/models/Ticket');
@@ -26,13 +26,13 @@ router.post('/report', passport.authenticate('jwt', {
             })
             .then(report => {
                 if (report) {
-                    res.status(200).json(report)
+                    return toolkit.handler(req, res, 200, report);
                 } else {
-                    res.status(400).json(handleErrors('An error has occured.'));
+                    return toolkit.handler(req, res, 400, 'An error has occured.');
                 }
             })
     } else {
-        res.status(400).json(inputErrors);
+        return toolkit.handler(req, res, 400, inputErrors);
     }
 });
 
@@ -52,13 +52,13 @@ router.post('/ticket', passport.authenticate('jwt', {
             })
             .then(ticket => {
                 if (ticket) {
-                    res.status(200).json(ticket)
+                    return toolkit.handler(req, res, 200, ticket);
                 } else {
-                    res.status(400).json(handleErrors('An error has occured.'));
+                    return toolkit.handler(req, res, 400, 'An error has occured.');
                 }
             })
     } else {
-        res.status(400).json(inputErrors);
+        return toolkit.handler(req, res, 400, inputErrors);
     }
 });
 
@@ -78,20 +78,22 @@ router.patch('/password', (req, res) => {
                 if (!inputErrors) {
                     bcrypt.hash(req.body.password, 10, (err, encrypted) => {
                         if (err) {
-                            res.status(400).json(handleErrors('An error has occured.'));
+                            return toolkit.handler(req, res, 400, 'An error has occured.');
                         } else {
                             user.update({
                                     password: encrypted
                                 })
-                                .then(result => res.status(200).json(result))
+                                .then(result => {
+                                    return toolkit.handler(req, res, 200, result);
+                                })
                                 .catch(err => console.error(err));
                         }
                     })
                 } else {
-                    res.status(400).json(inputErrors);
+                    return toolkit.handler(req, res, 400, inputErrors);
                 }
             } else {
-                res.status(404).json(handleErrors('User has not been found.'));
+                return toolkit.handler(req, res, 404, 'User has not been found.');
             }
         })
 });

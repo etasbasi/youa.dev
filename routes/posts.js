@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const inputValidation = require('../utils/validateInput');
-const handleErrors = require('../utils/handleErrors');
+const toolkit = require('../utils/toolkit');
 const Post = require('../db/models/Post');
 const Comment = require('../db/models/Comment');
 const Like = require('../db/models/Like');
@@ -22,14 +22,14 @@ router.post('/create', passport.authenticate('jwt', {
             })
             .then(post => {
                 if (post) {
-                    res.status(200).json(post);
+                    return toolkit.handler(req, res, 200, post);
                 } else {
-                    res.status(400).json(handleErrors('An error has occured.'));
+                    return toolkit.handler(req, res, 400, 'An error has occured.');
                 }
             })
             .catch(err => console.error(err));
     } else {
-        res.status(400).json(inputErrors);
+        return toolkit.handler(req, res, 400, inputErrors);
     }
 });
 
@@ -44,9 +44,9 @@ router.get('/:handle', (req, res) => {
         })
         .then(post => {
             if (post) {
-                res.status(200).json(post);
+                return toolkit.handler(req, res, 200, post);
             } else {
-                res.status(404).json(handleErrors('Post not found.'));
+                return toolkit.handler(req, res, 404, 'Post not found.');
             }
         })
         .catch(err => console.error(err));
@@ -72,11 +72,11 @@ router.put('/:handle/edit', passport.authenticate('jwt', {
                         body: req.body.body
                     })
                     .then(result => {
-                        res.status(200).json(result);
+                        return toolkit.handler(req, res, 200, result);
                     })
-                    .catch(err => console.error(err));;
+                    .catch(err => console.error(err));
             } else {
-                res.status(404).json(handleErrors('Post not found.'));
+                return toolkit.handler(req, res, 404, 'Post not found.');
             }
         })
         .catch(err => console.error(err));
@@ -95,9 +95,9 @@ router.delete('/:handle/delete', passport.authenticate('jwt', {
             }
         })
         // If the delete request was successful, send out a JSON object with the value of true
-        .then(() => res.status(200).json({
-            deleted: true
-        }))
+        .then(() => {
+            return toolkit.handler(req, res, 200, 'Post deleted.');
+        })
         // Else, log the produced error
         .catch(err => console.error(err));
 });
@@ -120,13 +120,13 @@ router.get('/:handle/comment/get', (req, res) => {
                     })
                     .then(comments => {
                         if (comments) {
-                            res.status(200).json(comments);
+                            return toolkit.handler(req, res, 200, comments);
                         } else {
-                            res.status(404).json(handleErrors('No comments found.'));
+                            return toolkit.handler(req, res, 404, 'No comments found.');
                         }
                     })
             } else {
-                res.status(404).json(handleErrors('Post not found.'));
+                return toolkit.handler(req, res, 404, 'Post not found.');
             }
         })
 });
@@ -151,15 +151,17 @@ router.put('/:handle/comment/create', passport.authenticate('jwt', {
                             post_id: post.id,
                             body: req.body.body
                         })
-                        .then(comment => res.status(200).json(comment))
+                        .then(comment => {
+                            return toolkit.handler(req, res, 200, comment);
+                        })
                         .catch(err => console.error(err));
                 } else {
-                    res.status(404).json(handleErrors('Post not found.'));
+                    return toolkit.handler(req, res, 404, 'Post not found.');
                 }
             })
             .catch(err => console.error(err));
     } else {
-        res.status(400).json(inputErrors);
+        return toolkit.handler(req, res, 400, inputErrors);
     }
 });
 
@@ -188,15 +190,15 @@ router.patch('/:handle/comment/edit', passport.authenticate('jwt', {
                                     body: req.body.body
                                 })
                                 .then(result => {
-                                    res.status(200).json(result);
+                                    return toolkit.handler(req, res, 200, result);
                                 })
                                 .catch(err => console.error(err));
                         } else {
-                            res.status(404).json(handleErrors('Comment not found.'));
+                            return toolkit.handler(req, res, 404, 'Comment not found.');
                         }
                     })
             } else {
-                res.status(404).json(handleErrors('Post not found.'));
+                return toolkit.handler(req, res, 404, 'Post not found.');
             }
         })
         .catch(err => console.error(err));
@@ -224,16 +226,16 @@ router.delete('/:handle/comment/delete', passport.authenticate('jwt', {
                     .then(comment => {
                         if (comment) {
                             comment.destroy()
-                                .then(() => res.status(200).json({
-                                    deleted: true
-                                }))
+                                .then(() => {
+                                    return toolkit.handler(req, res, 200, 'Comment deleted.');
+                                })
                                 .catch(err => console.error(err));
                         } else {
-                            res.status(404).json(handleErrors('Comment not found.'));
+                            return toolkit.handler(req, res, 404, 'Comment not found.');
                         }
                     })
             } else {
-                res.status(404).json(handleErrors('Post not found.'));
+                return toolkit.handler(req, res, 404, 'Post not found.');
             }
         })
 });
@@ -254,10 +256,12 @@ router.get('/:handle/like/fetch', (req, res) => {
                             post_id: post.id
                         }
                     })
-                    .then(likes => res.status(200).json(likes))
+                    .then(likes => {
+                        return toolkit.handler(req, res, 200, likes);
+                    })
                     .catch(err => console.error(err));
             } else {
-                res.status(404).json(handleErrors('Post not found.'));
+                return toolkit.handler(req, res, 404, 'Post not found');
             }
         })
 })
@@ -288,20 +292,20 @@ router.patch('/:handle/like', passport.authenticate('jwt', {
                                     post_id: post.id,
                                     value: true
                                 })
-                                .then(() => res.status(200).json({
-                                    liked: true
-                                }))
+                                .then(() => {
+                                    return toolkit.handler(req, res, 200, true);
+                                })
                                 .catch(err => console.error(err));
                         } else {
                             like.destroy()
-                                .then(() => res.status(200).json({
-                                    liked: false
-                                }))
+                                .then(() => {
+                                    return toolkit.handler(req, res, 200, false);
+                                })
                                 .catch(err => console.error(err));
                         }
                     })
             } else {
-                res.status(404).json(handleErrors('Post not found.'));
+                return toolkit.handler(req, res, 404, 'Post not found.');
             }
         })
 });
