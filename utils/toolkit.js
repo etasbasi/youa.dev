@@ -1,5 +1,7 @@
+const Log = require('../db/models/Log');
+
 module.exports = {
-    errorMessage(statusCode, message) {
+    response(statusCode, message) {
         if (typeof message === 'object') {
             return message;
         } else {
@@ -15,9 +17,11 @@ module.exports = {
         }
     },
     handler(requestObject, responseObject, statusCode, data, _super = false) {
-        if (!_super) {
-            responseObject.status(statusCode).json(this.errorMessage(statusCode, data));
+        responseObject.status(statusCode).json(this.response(statusCode, data));
+        if (_super) {
+            Log.create({
+                data: JSON.stringify(this.response(statusCode, data))
+            });
         }
     }
-
 };
