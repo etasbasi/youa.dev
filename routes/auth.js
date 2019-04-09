@@ -155,7 +155,7 @@ router.get('/current', passport.authenticate('jwt', {
                 return toolkit.handler(req, res, 200, response);
             } else {
                 // Return an error
-                return toolkit.handler(req, res, 404, 'User not found');;
+                return toolkit.handler(req, res, 404, 'User not found');
             }
         })
 });
@@ -174,7 +174,7 @@ router.delete('/delete', passport.authenticate('jwt', {
         })
         // If the delete request was successful, send out a JSON object with the value of true
         .then(() => {
-            return toolkit.handler(req, res, 200, 'Account deleted.')
+            return toolkit.handler(req, res, 200, 'Account deleted.');
         })
         // Else, log the produced error
         .catch(err => console.error(err));
