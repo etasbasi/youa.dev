@@ -115,7 +115,7 @@ class validateInput {
         }
         return this.check();
     }
-};
+}
 
 const inputValidation = new validateInput();
 module.exports = inputValidation;

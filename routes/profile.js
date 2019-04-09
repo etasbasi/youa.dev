@@ -27,7 +27,7 @@ router.post('/create', passport.authenticate('jwt', {
                 if (!profile) {
                     // If there's no profile, create a new one
                     const randomHandleNumber = `${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
-                    const handle = `${firstName.toLowerCase().replace(' ', '')}-${lastName.toLowerCase().replace(' ', '')}-${randomHandleNumber}`;
+                    const handle = `${req.body.firstName.toLowerCase().replace(' ', '')}-${req.body.lastName.toLowerCase().replace(' ', '')}-${randomHandleNumber}`;
                     Profile.create({
                             user_id: id,
                             handle,

@@ -15,7 +15,9 @@ module.exports = {
         }
     },
     handler(requestObject, responseObject, statusCode, data, _super = false) {
-        responseObject.status(statusCode).json(this.errorMessage(statusCode, data));
+        if (!_super) {
+            responseObject.status(statusCode).json(this.errorMessage(statusCode, data));
+        }
     }
 
 };
