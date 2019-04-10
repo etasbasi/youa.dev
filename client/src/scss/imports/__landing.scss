@@ -1,0 +1,17 @@
+.landing {
+  padding: 0;
+  margin: 0;
+  font-family: $primaryFonts;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $primaryColor;
+  h1 {
+    font-weight: lighter;
+    font-size: 50px;
+    color: $secondaryColor;
+  }
+}

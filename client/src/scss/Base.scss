@@ -1,0 +1,11 @@
+// Imports
+@import "./imports/_vars";
+@import "./imports/_landing";
+
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
