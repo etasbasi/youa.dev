@@ -13,6 +13,10 @@ const Report = Database.define('Report', {
     },
     body: {
         type: Sequelize.STRING
+    },
+    resolved: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
 })
 

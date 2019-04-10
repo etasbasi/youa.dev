@@ -15,6 +15,10 @@ const User = Database.define('User', {
     verified: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
+    },
+    isBanned: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
 })
 

@@ -2,7 +2,7 @@ const Log = require('../db/models/Log');
 
 module.exports = {
     response(statusCode, message) {
-        if (typeof message === 'object') {
+        if (typeof message === 'object' || Array.isArray(message)) {
             return message;
         } else {
             if (statusCode === 200) {

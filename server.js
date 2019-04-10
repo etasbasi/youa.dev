@@ -12,6 +12,7 @@ const authRoute = require('./routes/auth');
 const profileRoute = require('./routes/profile');
 const postsRoute = require('./routes/posts');
 const supportRoute = require('./routes/support');
+const adminRoute = require('./routes/admin');
 
 // Middleware
 app.use(bodyParser.urlencoded({
@@ -29,6 +30,7 @@ app.use('/api/auth', authRoute);
 app.use('/api/profile', profileRoute);
 app.use('/api/posts', postsRoute);
 app.use('/api/support', supportRoute);
+app.use('/api/admin', adminRoute);
 
 
 // Database
