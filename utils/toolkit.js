@@ -23,5 +23,12 @@ module.exports = {
                 data: JSON.stringify(this.response(statusCode, data))
             });
         }
+    },
+    isAdmin(user) {
+        if (user.type === 'admin') {
+            return true;
+        } else {
+            return false;
+        }
     }
 };
