@@ -3,6 +3,7 @@ const passport = require('passport');
 const toolkit = require('../utils/toolkit');
 const inputValidation = require('../utils/validateInput');
 const Profile = require('../db/models/Profile');
+const Follow = require('../db/models/Follow');
 
 // ROUTE:   =>  /api/profile/create 
 // METHOD:  =>  POST
@@ -78,13 +79,13 @@ router.get('/current', passport.authenticate('jwt', {
         .catch(err => console.error(err));
 });
 
-// ROUTE:   =>  /api/profile/:id 
+// ROUTE:   =>  /api/profile/:handle 
 // METHOD:  =>  GET
-// DESC:    =>  Get user's profile via ID
-router.get('/:id', (req, res) => {
+// DESC:    =>  Get user's profile via handle
+router.get('/:handle', (req, res) => {
     Profile.findOne({
             where: {
-                user_id: req.params.id
+                handle: req.params.handle
             }
         })
         .then(profile => {
@@ -137,16 +138,90 @@ router.put('/edit', passport.authenticate('jwt', {
 router.delete('/delete', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
-    Profile.destroy({
+    Profile.findOne({
             where: {
-                id: req.body.id
+                user_id: req.user.id
             }
         })
-        // If the delete request was successful, send out a JSON object with the value of true
-        .then(() => {
-            return toolkit.handler(req, res, 200, 'Profile deleted.');
+        .then(profile => {
+            if (profile) {
+                profile.destroy()
+                    // If the delete request was successful, send out a JSON object with the value of true
+                    .then(() => {
+                        return toolkit.handler(req, res, 200, 'Profile deleted.');
+                    })
+                    .catch(err => console.error(err));
+            } else {
+                return toolkit.handler(req, res, 404, 'Profile not found.');
+            }
+        }).catch((err) => {
+            console.error(err);
+        });
+});
+
+// ROUTE:   =>  /api/profile/follow/:id/
+// METHOD:  =>  PUT
+// DESC:    =>  Follow or un-follow a profile
+router.put('/follow/:id', passport.authenticate('jwt', {
+    session: false
+}), (req, res) => {
+    const followed_user_id = req.params.id;
+    const user_id = req.user.id;
+    if (user_id === followed_user_id) {
+        return toolkit.handler(req, res, 403, 'You cannot follow your own profile.');
+    } else {
+        Follow.findOne({
+                where: {
+                    user_id,
+                    followed_user_id
+                }
+            })
+            .then(follow => {
+                if (follow) {
+                    follow.destroy()
+                        .then(() => {
+                            return toolkit.handler(req, res, 200, 'Profile has been unfollowed.');
+                        })
+                        .catch(err => console.error(err));
+                } else {
+                    Follow.create({
+                            user_id,
+                            followed_user_id
+                        })
+                        .then(newFollow => {
+                            return toolkit.handler(req, res, 200, newFollow);
+                        })
+                        .catch(err => console.error(err));
+                }
+            })
+    }
+})
+
+// ROUTE:   =>  /api/profile/:handle/followers 
+// METHOD:  =>  GET
+// DESC:    =>  Get followers
+router.get('/:handle/followers', (req, res) => {
+    Profile.findOne({
+            where: {
+                handle: req.params.handle
+            }
         })
-        .catch(err => console.error(err));
+        .then(profile => {
+            if (profile) {
+                Follow.findAll({
+                        where: {
+                            followed_user_id: profile.user_id
+                        }
+                    })
+                    .then(followers => {
+                        return toolkit.handler(req, res, 200, followers);
+                    }).catch(err => {
+                        console.error(err);
+                    });
+            } else {
+                return toolkit.handler(req, res, 404, 'Profile not found.');
+            }
+        })
 });
 
 
