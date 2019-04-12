@@ -1,6 +1,5 @@
 // eslint-disable-next-line
 import React, { Component } from "react";
-import "./scss/Base.scss";
 
 class Landing extends Component {
   render() {
