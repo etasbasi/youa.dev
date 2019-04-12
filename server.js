@@ -48,6 +48,17 @@ Database.authenticate()
 Database.sync();
 
 // Server Init
-app.listen(config.SERVER_PORT, () =>
+const server = require("http").Server(app);
+
+// Socket.io
+const io = require("socket.io")(server);
+
+// Server Start
+server.listen(config.SERVER_PORT, () =>
   console.log(`Server running on http://localhost:${config.SERVER_PORT}/`)
 );
+
+// Sockets
+io.on("connection", socket => {
+  socket.emit("test", "Socket.io Initialized.");
+});
