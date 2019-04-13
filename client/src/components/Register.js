@@ -72,6 +72,11 @@ export default class Register extends Component {
             </li>
           </ul>
         </div>
+        <p className="register_form--account">
+          Already have an account?
+          <br />
+          Click here to log in.
+        </p>
       </div>
     );
   }

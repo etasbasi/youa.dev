@@ -1,5 +1,6 @@
-import axios from "axios";
+import API from "./utils/API";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 // FIXME: => Set token to a cookie before deployment
 // FIXME: => Remove the proxy before deployment
@@ -7,9 +8,11 @@ import jwt_decode from "jwt-decode";
 class StoreClass {
   constructor() {
     this.warehouse = {
-      isLoggedIn: false
+      isLoggedIn: false,
+      userProfile: undefined
     };
     this.checkToken = this.checkToken.bind(this);
+    this.getUserProfile = this.getUserProfile.bind(this);
   }
   checkToken() {
     if (localStorage.token) {
@@ -29,21 +32,32 @@ class StoreClass {
     return `http://localhost:8000${url}`;
   }
   register(data) {
-    axios
-      .post(this.applyProxy("/api/auth/register"), data)
+    API.post(this.applyProxy("/api/auth/register"), data)
       .then(() => (window.location.href = "/login"))
       .catch(err => console.error(err.response.data));
   }
   login(data) {
-    axios
-      .post(this.applyProxy("/api/auth/login"), data)
+    API.post(this.applyProxy("/api/auth/login"), data)
       .then(res => res.data)
       .then(data => {
         const { token } = data;
         localStorage.setItem("token", token);
         this.checkToken();
+        window.location.href = `/create`;
       })
       .catch(err => console.error(err.response.data));
+  }
+  async getUserProfile() {
+    const response = await axios.get(this.applyProxy, {
+      headers: { Authorization: localStorage.token }
+    });
+    const { status } = await response;
+    if (status === 200) {
+      this.warehouse.userProfile = response.data;
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 

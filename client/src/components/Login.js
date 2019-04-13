@@ -60,6 +60,11 @@ export default class Login extends Component {
             </li>
           </ul>
         </div>
+        <p className="login_form--account">
+          Don't have an account?
+          <br />
+          Click here to register.
+        </p>
       </div>
     );
   }

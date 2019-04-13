@@ -44,8 +44,8 @@ Database.authenticate()
   .then(() => console.log("Database connection established."))
   .catch(err => console.error("Connection refused. Error: ", err));
 
-// FIXME: => Admin only - Remove before deployment
-Database.sync();
+// FIXME: => Enable only when needed
+// Database.sync();
 
 // Server Init
 const server = require("http").Server(app);
@@ -54,7 +54,7 @@ const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
 // Server Start
-server.listen(config.SERVER_PORT, () =>
+app.listen(config.SERVER_PORT, () =>
   console.log(`Server running on http://localhost:${config.SERVER_PORT}/`)
 );
 

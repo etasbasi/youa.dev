@@ -4,6 +4,8 @@ import Landing from "./components/Landing";
 import AdminDashboard from "./components/AdminDashboard";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Profile from "./components/Profile";
+import ProfileCreation from "./components/ProfileCreation";
 
 // FIXME: => Move socket module to the components where chat will be accessible from
 // eslint-disable-next-line
@@ -17,6 +19,8 @@ export default class App extends Component {
         <Route strict exact path="/admin" component={AdminDashboard} />
         <Route strict exact path="/register" component={Register} />
         <Route strict exact path="/login" component={Login} />
+        <Route strict exact path="/create" component={ProfileCreation} />
+        <Route strict exact path="/profile" component={Profile} />
       </Router>
     );
   }
