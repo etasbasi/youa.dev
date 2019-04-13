@@ -8,10 +8,40 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: $primaryColor;
-  h1 {
+  background: linear-gradient(270deg, #49113a, #61134c, #a21c7e);
+  background-size: 600% 600%;
+  -webkit-animation: gradientLoop 30s ease infinite;
+  -moz-animation: gradientLoop 30s ease infinite;
+  -o-animation: gradientLoop 30s ease infinite;
+  animation: gradientLoop 30s ease infinite;
+  color: $secondaryColor;
+  .landing_title {
     font-weight: lighter;
     font-size: 50px;
-    color: $secondaryColor;
+    margin: 0 0 15px 0;
+  }
+  .landing_motto {
+    font-size: 22px;
+    border-bottom: 1px solid $secondaryColor;
+  }
+  .landing_get-started {
+    position: fixed;
+    bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .landing_get-started--redirect {
+      text-decoration: none;
+      color: $secondaryColor;
+      margin: 10px 0;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all ease-in-out 0.2s;
+      border-bottom: 1px solid transparent;
+      &:hover {
+        border-bottom-color: $secondaryColor;
+      }
+    }
   }
 }
