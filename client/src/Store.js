@@ -1,8 +1,8 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
-// FIXME: Set token to a cookie before deployment
-// FIXME: Remove the proxy before deployment
+// FIXME: => Set token to a cookie before deployment
+// FIXME: => Remove the proxy before deployment
 
 class StoreClass {
   constructor() {
