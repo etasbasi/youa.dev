@@ -1,30 +1,44 @@
 // eslint-disable-next-line
 import React, { Component } from "react";
+import adminCheck from "../utils/adminCheck";
 import Store from "../Store";
+import RedirectToPath from "../utils/RedirectToPath";
 
 const Sidebar = () => {
   return (
-    <div className="dashboard_nav">
-      <ul className="dashboard_nav_list">
-        <li className="dashboard_nav_list--item">
-          <i className="dashboard_nav_list--item--icon fas fa-user" />
-          <p className="dashboard_nav_list--item--text">User</p>
+    <div className="admin_dashboard_nav">
+      <ul className="admin_dashboard_nav_list">
+        <li className="admin_dashboard_nav_list--item">
+          <i className="admin_dashboard_nav_list--item--icon fas fa-user" />
+          <p className="admin_dashboard_nav_list--item--text">User</p>
         </li>
-        <li className="dashboard_nav_list--item" data-ref="dashboard_server">
-          <i className="dashboard_nav_list--item--icon fas fa-server" />
-          <p className="dashboard_nav_list--item--text">Server Status</p>
+        <li
+          className="admin_dashboard_nav_list--item"
+          data-ref="admin_dashboard_server"
+        >
+          <i className="admin_dashboard_nav_list--item--icon fas fa-server" />
+          <p className="admin_dashboard_nav_list--item--text">Server Status</p>
         </li>
-        <li className="dashboard_nav_list--item" data-ref="dashboard_logs">
-          <i className="dashboard_nav_list--item--icon fas fa-clipboard-list" />
-          <p className="dashboard_nav_list--item--text">Logs</p>
+        <li
+          className="admin_dashboard_nav_list--item"
+          data-ref="admin_dashboard_logs"
+        >
+          <i className="admin_dashboard_nav_list--item--icon fas fa-clipboard-list" />
+          <p className="admin_dashboard_nav_list--item--text">Logs</p>
         </li>
-        <li className="dashboard_nav_list--item" data-ref="dashboard_tickets">
-          <i className="dashboard_nav_list--item--icon fas fa-ticket-alt" />
-          <p className="dashboard_nav_list--item--text">Tickets</p>
+        <li
+          className="admin_dashboard_nav_list--item"
+          data-ref="admin_dashboard_tickets"
+        >
+          <i className="admin_dashboard_nav_list--item--icon fas fa-ticket-alt" />
+          <p className="admin_dashboard_nav_list--item--text">Tickets</p>
         </li>
-        <li className="dashboard_nav_list--item" data-ref="dashboard_reports">
-          <i className="dashboard_nav_list--item--icon fas fa-flag" />
-          <p className="dashboard_nav_list--item--text">Reports</p>
+        <li
+          className="admin_dashboard_nav_list--item"
+          data-ref="admin_dashboard_reports"
+        >
+          <i className="admin_dashboard_nav_list--item--icon fas fa-flag" />
+          <p className="admin_dashboard_nav_list--item--text">Reports</p>
         </li>
       </ul>
     </div>
@@ -61,15 +75,19 @@ const ProfileDrawer = () => {
 
 class AdminDashboard extends Component {
   render() {
-    return (
-      <div className="dashboard">
-        <Sidebar />
-        <ProfileDrawer />
-        <div className="dashboard_content">
-          <h1 className="dashboard_content_title">Dashboard</h1>
+    if (adminCheck()) {
+      return (
+        <div className="admin_dashboard">
+          <Sidebar />
+          <ProfileDrawer />
+          <div className="admin_dashboard_content">
+            <h1 className="admin_dashboard_content_title">Dashboard</h1>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return RedirectToPath("/login");
+    }
   }
 }
 

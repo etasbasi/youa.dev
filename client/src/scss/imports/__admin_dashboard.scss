@@ -1,8 +1,8 @@
-.dashboard {
+.admin_dashboard {
   width: 100%;
   height: 100vh;
   overflow-x: hidden;
-  .dashboard_nav {
+  .admin_dashboard_nav {
     position: fixed;
     left: 0%;
     height: 100%;
@@ -15,7 +15,7 @@
     -webkit-box-shadow: 5px 0px 35px -20px rgba(51, 51, 51, 1);
     -moz-box-shadow: 5px 0px 35px -20px rgba(51, 51, 51, 1);
     box-shadow: 5px 0px 35px -20px rgba(51, 51, 51, 1);
-    .dashboard_nav_list {
+    .admin_dashboard_nav_list {
       margin: 0;
       padding: 0;
       width: 100%;
@@ -23,7 +23,7 @@
       color: $secondaryColor;
       font-weight: bold;
       list-style-type: none;
-      .dashboard_nav_list--item {
+      .admin_dashboard_nav_list--item {
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -32,7 +32,7 @@
         border-bottom: 1px solid transparent;
         transition: all ease-in-out 0.2s;
         cursor: pointer;
-        .dashboard_nav_list--item--icon {
+        .admin_dashboard_nav_list--item--icon {
           font-size: 22px;
           margin-right: 5px;
           margin-left: 15px;
@@ -45,14 +45,14 @@
       }
     }
   }
-  .dashboard_content {
+  .admin_dashboard_content {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    .dashboard_content_title {
+    .admin_dashboard_content_title {
       margin: 0;
       font-family: $secondaryFonts;
     }

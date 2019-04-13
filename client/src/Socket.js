@@ -25,3 +25,5 @@ socket.on("receive_message", data => {
 });
 
 socket.on("messages_deleted", response => console.log(response));
+
+export { handler };
