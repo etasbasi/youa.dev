@@ -20,7 +20,7 @@ export default class App extends Component {
         <Route strict exact path="/register" component={Register} />
         <Route strict exact path="/login" component={Login} />
         <Route strict exact path="/create" component={ProfileCreation} />
-        <Route strict exact path="/profile" component={Profile} />
+        <Route strict exact path="/profile/:handle" component={Profile} />
       </Router>
     );
   }

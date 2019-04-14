@@ -57,6 +57,17 @@ class StoreClass {
       return false;
     }
   }
+  getProfile(handle, callback) {
+    axios
+      .get(this.applyProxy(`/api/profile/get/${handle}`))
+      .then(res => res.data)
+      .then(data => {
+        if (data) {
+          callback(null, data);
+        }
+      })
+      .catch(err => callback(err, null));
+  }
 }
 
 const Store = new StoreClass();
