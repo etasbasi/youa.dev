@@ -14,11 +14,7 @@ const postsRoute = require("./routes/posts");
 const supportRoute = require("./routes/support");
 const adminRoute = require("./routes/admin");
 
-// FIXME: => CORS - Remove before deployment
-const cors = require("cors");
-app.use(cors());
-
-// Middleware
+// Body Parser
 app.use(
   bodyParser.urlencoded({
     extended: false
@@ -29,6 +25,10 @@ app.use(bodyParser.json());
 // Passport
 app.use(passport.initialize());
 require("./config/passport")(passport);
+
+// FIXME: => CORS - Remove before deployment
+const cors = require("cors");
+app.use(cors());
 
 // Routes
 app.use("/api/test", testRoute);

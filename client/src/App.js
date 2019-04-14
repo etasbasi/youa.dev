@@ -9,7 +9,7 @@ import ProfileCreation from "./components/ProfileCreation";
 
 // FIXME: => Move socket module to the components where chat will be accessible from
 // eslint-disable-next-line
-import Socket from "./Socket";
+// import Socket from "./Socket";
 
 export default class App extends Component {
   render() {

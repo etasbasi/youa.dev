@@ -48,9 +48,7 @@ class StoreClass {
       .catch(err => console.error(err.response.data));
   }
   async getUserProfile() {
-    const response = await axios.get(this.applyProxy, {
-      headers: { Authorization: localStorage.token }
-    });
+    const response = await API.get(this.applyProxy("/api/profile/current"));
     const { status } = await response;
     if (status === 200) {
       this.warehouse.userProfile = response.data;
