@@ -5,4 +5,49 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: $primaryFonts;
+  .profile_page_header {
+    -webkit-box-shadow: 3px 3px 15px -5px rgba(51, 51, 51, 1);
+    -moz-box-shadow: 3px 3px 15px -5px rgba(51, 51, 51, 1);
+    box-shadow: 3px 3px 15px -5px rgba(51, 51, 51, 1);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 30%;
+    background-color: $primaryColor;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .profile_page_header--info {
+      text-align: center;
+      img {
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+      }
+      .profile_page_header--info_text {
+        color: $secondaryColor;
+        &:nth-child(2) {
+          font-weight: bold;
+          font-size: 22px;
+          margin: 5px 0;
+        }
+        &:nth-child(3) {
+          margin-top: 0;
+          font-size: 18px;
+          border-bottom: 1px solid $secondaryColor;
+          font-style: italic;
+        }
+      }
+    }
+    .profile_page_header--social {
+      a {
+        color: $secondaryColor;
+        cursor: pointer;
+        text-decoration: none;
+        margin: 0 5px;
+      }
+    }
+  }
 }

@@ -39,12 +39,34 @@ export default class Profile extends Component {
             ) : (
               ""
             )}
-            <p>{this.state.profile.biography}</p>
-            <p>{this.state.profile.dev}</p>
-            <p>{this.state.profile.linkedin}</p>
-            <p>{this.state.profile.github}</p>
-            <p>{this.state.profile.stackoverflow}</p>
-            <p>{this.state.profile.website}</p>
+            <div className="profile_page_header">
+              <div className="profile_page_header--info">
+                <img src={this.state.profile.profilePicture} alt="img" />
+                <p className="profile_page_header--info_text">
+                  {this.state.profile.firstName} {this.state.profile.lastName}
+                </p>
+                <p className="profile_page_header--info_text">
+                  {this.state.profile.biography}
+                </p>
+              </div>
+              <div className="profile_page_header--social">
+                <a href={this.state.profile.github}>
+                  <i className="fab fa-github-square fa-2x" />
+                </a>
+                <a href={this.state.profile.linkedin}>
+                  <i className="fab fa-linkedin fa-2x" />
+                </a>
+                <a href={this.state.profile.stackoverflow}>
+                  <i className="fab fa-stack-overflow fa-2x" />
+                </a>
+                <a href={this.state.profile.dev}>
+                  <i className="fab fa-dev fa-2x" />
+                </a>
+                <a href={this.state.profile.website}>
+                  <i className="fas fa-external-link-square-alt fa-2x" />
+                </a>
+              </div>
+            </div>
           </Fragment>
         ) : (
           <p>No Profile Found</p>
