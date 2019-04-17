@@ -43,7 +43,7 @@ class StoreClass {
         const { token } = data;
         localStorage.setItem("token", token);
         this.checkToken();
-        window.location.href = `/create`;
+        window.location.href = "/create";
       })
       .catch(err => console.error(err.response.data));
   }
@@ -67,6 +67,16 @@ class StoreClass {
         }
       })
       .catch(err => callback(err, null));
+  }
+  createProfile(data) {
+    axios
+      .post(this.applyProxy("/api/profile/create"), data)
+      .then(res => res.data)
+      .then(data => {
+        if (data) {
+          window.location.href = `/profile/${data.handle}`;
+        }
+      });
   }
 }
 
