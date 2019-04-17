@@ -44,10 +44,11 @@ export default class ProfileCreation extends Component {
         }
       })
       .catch(err => {
-        document.getElementById("Showme").style.display = "block";
+        document.getElementsByClassName("profile_creation")[0].style.display =
+          "block";
       });
     return (
-      <div id="Showme">
+      <div className="profile_creation">
         <h1>Create your profile</h1>
         <form>
           <div>
