@@ -51,35 +51,57 @@ export default class Profile extends Component {
                 </p>
               </div>
               <div className="profile_page_header--social">
-                <a href={this.state.data.profile.github}>
-                  <i className="fab fa-github-square fa-2x" />
-                </a>
-                <a href={this.state.data.profile.linkedin}>
-                  <i className="fab fa-linkedin fa-2x" />
-                </a>
-                <a href={this.state.data.profile.stackoverflow}>
-                  <i className="fab fa-stack-overflow fa-2x" />
-                </a>
-                <a href={this.state.data.profile.dev}>
-                  <i className="fab fa-dev fa-2x" />
-                </a>
-                <a href={this.state.data.profile.website}>
-                  <i className="fas fa-external-link-square-alt fa-2x" />
-                </a>
+                {this.state.data.profile.github !== "" ? (
+                  <a href={this.state.data.profile.github}>
+                    <i className="fab fa-github-square fa-2x" />
+                  </a>
+                ) : (
+                  ""
+                )}
+                {this.state.data.profile.linkedin !== "" ? (
+                  <a href={this.state.data.profile.linkedin}>
+                    <i className="fab fa-linkedin fa-2x" />
+                  </a>
+                ) : (
+                  ""
+                )}
+                {this.state.data.profile.stackoverflow !== "" ? (
+                  <a href={this.state.data.profile.stackoverflow}>
+                    <i className="fab fa-stack-overflow fa-2x" />
+                  </a>
+                ) : (
+                  ""
+                )}
+                {this.state.data.profile.dev !== "" ? (
+                  <a href={this.state.data.profile.dev}>
+                    <i className="fab fa-dev fa-2x" />
+                  </a>
+                ) : (
+                  ""
+                )}
+                {this.state.data.profile.website !== "" ? (
+                  <a href={this.state.data.profile.website}>
+                    <i className="fas fa-external-link-square-alt fa-2x" />
+                  </a>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             <div className="profile_posts">
               <h1>Posts:</h1>
-              {this.state.data.posts
-                ? this.state.data.posts.map(post => {
-                    return (
-                      <div className="profile_posts--post">
-                        <p>{post.title}</p>
-                        <p>{post.body}</p>
-                      </div>
-                    );
-                  })
-                : ""}
+              {this.state.data.posts.length > 0 ? (
+                this.state.data.posts.map(post => {
+                  return (
+                    <div className="profile_posts--post">
+                      <p>{post.title}</p>
+                      <p>{post.body}</p>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>User has no posts.</p>
+              )}
             </div>
           </Fragment>
         ) : (
