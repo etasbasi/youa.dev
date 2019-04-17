@@ -68,17 +68,6 @@ class StoreClass {
       })
       .catch(err => callback(err, null));
   }
-  getPosts(id, callback) {
-    axios
-      .get(this.applyProxy(`/api/posts/user/${id}`))
-      .then(res => res.data)
-      .then(data => {
-        if (data) {
-          callback(null, data);
-        }
-      })
-      .catch(err => callback(err, null));
-  }
 }
 
 const Store = new StoreClass();
