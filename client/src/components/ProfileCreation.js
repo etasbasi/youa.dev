@@ -7,13 +7,19 @@ export default class ProfileCreation extends Component {
     this.state = {};
   }
   render() {
-    Store.getUserProfile().then(result => {
-      if (result) {
-        window.location.href = "/profile";
-      }
-    });
+    Store.getUserProfile()
+      .then(result => {
+        if (result) {
+          window.location.href = `/profile/${
+            Store.warehouse.userProfile.handle
+          }`;
+        }
+      })
+      .catch(err => {
+        document.getElementById("Showme").style.display = "block";
+      });
     return (
-      <div>
+      <div id="Showme">
         <h1>Create your profile</h1>
       </div>
     );

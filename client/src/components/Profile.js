@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from "react";
 import Store from "../Store";
 import ProfileDrawer from "./imports/ProfileDrawer";
-import ProfileSidebar from "./imports/ProfileSidebar";
+import Sidebar from "./imports/Sidebar";
 import isProfileOwner from "../utils/isProfileOwner";
 
 export default class Profile extends Component {
@@ -29,7 +29,7 @@ export default class Profile extends Component {
           <Fragment>
             {isProfileOwner(this.state.data.profile.user_id) ? (
               <Fragment>
-                <ProfileSidebar />
+                <Sidebar />
                 <ProfileDrawer
                   firstName={this.state.data.profile.firstName}
                   lastName={this.state.data.profile.lastName}
@@ -93,7 +93,7 @@ export default class Profile extends Component {
               {this.state.data.posts.length > 0 ? (
                 this.state.data.posts.map(post => {
                   return (
-                    <div className="profile_posts--post">
+                    <div key={post.id} className="profile_posts--post">
                       <p>{post.title}</p>
                       <p>{post.body}</p>
                     </div>
