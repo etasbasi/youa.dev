@@ -4,6 +4,7 @@ const toolkit = require("../utils/toolkit");
 const inputValidation = require("../utils/validateInput");
 const Profile = require("../db/models/Profile");
 const Follow = require("../db/models/Follow");
+const Post = require("../db/models/Post");
 
 // ROUTE:   =>  /api/profile/create
 // METHOD:  =>  POST
@@ -111,7 +112,13 @@ router.get("/get/:handle", (req, res) => {
       if (!profile) {
         return toolkit.handler(req, res, 404, "Profile not found.");
       } else {
-        return toolkit.handler(req, res, 200, profile);
+        Post.findAll({ where: { user_id: profile.user_id } }).then(posts => {
+          if (posts) {
+            return toolkit.handler(req, res, 200, { profile, posts });
+          } else {
+            return toolkit.handler(req, res, 200, profile);
+          }
+        });
       }
     })
     .catch(err => console.error(err));
