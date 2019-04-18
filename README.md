@@ -14,6 +14,10 @@
 
 > You can run `npm run prep` to avoid having to change directories to install the modules for the client separately.
 
+###### Mailing Service Variables:
+
+> You can use Mailgun, which offers a free service. You will need the information for the SMTP protocol in order for the mailer to work.
+
 ---
 
 ### Environmental Variables:
