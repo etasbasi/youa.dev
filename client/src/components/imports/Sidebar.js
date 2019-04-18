@@ -33,23 +33,23 @@ export default function Sidebar(props) {
       <div className="sidebar_nav">
         <ul className="sidebar_nav_list">
           <li className="sidebar_nav_list--item">
-            <i className="sidebar_nav_list--item--icon fas fa-user" />
+            <i className="sidebar_nav_list--item--icon fas fa-home" />
             <p className="sidebar_nav_list--item--text">Home</p>
           </li>
           <li className="sidebar_nav_list--item">
-            <i className="sidebar_nav_list--item--icon fas fa-user" />
+            <i className="sidebar_nav_list--item--icon fas fa-rss-square" />
             <p className="sidebar_nav_list--item--text">Feed</p>
           </li>
           <li className="sidebar_nav_list--item" data-ref="sidebar_logs">
-            <i className="sidebar_nav_list--item--icon fas fa-clipboard-list" />
+            <i className="sidebar_nav_list--item--icon fas fa-comment" />
             <p className="sidebar_nav_list--item--text">Posts</p>
           </li>
           <li className="sidebar_nav_list--item" data-ref="sidebar_tickets">
-            <i className="sidebar_nav_list--item--icon fas fa-ticket-alt" />
+            <i className="sidebar_nav_list--item--icon fas fa-envelope" />
             <p className="sidebar_nav_list--item--text">Messages</p>
           </li>
           <li className="sidebar_nav_list--item" data-ref="sidebar_reports">
-            <i className="sidebar_nav_list--item--icon fas fa-flag" />
+            <i className="sidebar_nav_list--item--icon fas fa-cog" />
             <p className="sidebar_nav_list--item--text">Settings</p>
           </li>
         </ul>
