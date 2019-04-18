@@ -69,14 +69,15 @@ class StoreClass {
       .catch(err => callback(err, null));
   }
   createProfile(data) {
-    axios
-      .post(this.applyProxy("/api/profile/create"), data)
+    API.post(this.applyProxy("/api/profile/create"), data)
       .then(res => res.data)
       .then(data => {
         if (data) {
+          console.log(data);
           window.location.href = `/profile/${data.handle}`;
         }
-      });
+      })
+      .catch(err => console.error(err));
   }
 }
 

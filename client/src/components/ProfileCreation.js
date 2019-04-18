@@ -7,19 +7,20 @@ export default class ProfileCreation extends Component {
     this.state = {
       firstName: undefined,
       lastName: undefined,
-      profilePicture: "",
-      biography: "",
-      github: "",
-      linkedin: "",
-      dev: "",
-      stackoverflow: "",
-      website: ""
+      profilePicture: undefined,
+      biography: undefined,
+      github: undefined,
+      linkedin: undefined,
+      dev: undefined,
+      stackoverflow: undefined,
+      website: undefined
     };
   }
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  handleSubmit() {
+  handleSubmit = e => {
+    e.preventDefault();
     const data = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -32,7 +33,7 @@ export default class ProfileCreation extends Component {
       website: this.state.website
     };
     Store.createProfile(data);
-  }
+  };
   render() {
     // FIXME: => Produce a better solution for the conditional render to avoid API calls once every darn state change...
     Store.getUserProfile()
@@ -45,7 +46,7 @@ export default class ProfileCreation extends Component {
       })
       .catch(err => {
         document.getElementsByClassName("profile_creation")[0].style.display =
-          "block";
+          "flex";
       });
     return (
       <div className="profile_creation">

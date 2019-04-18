@@ -46,9 +46,13 @@ export default class Profile extends Component {
                   {this.state.data.profile.firstName}{" "}
                   {this.state.data.profile.lastName}
                 </p>
-                <p className="profile_page_header--info_text">
-                  {this.state.data.profile.biography}
-                </p>
+                {this.state.data.profile.biography ? (
+                  <p className="profile_page_header--info_text">
+                    {this.state.data.profile.biography}
+                  </p>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="profile_page_header--social">
                 {this.state.data.profile.github !== "" ? (
