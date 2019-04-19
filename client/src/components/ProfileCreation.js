@@ -38,10 +38,11 @@ export default class ProfileCreation extends Component {
   render() {
     return (
       <div className="profile_creation">
-        <h1>Create your profile</h1>
-        <form>
-          <div>
+        <h1 className="profile_creation--title">Create your profile:</h1>
+        <form className="profile_creation--form">
+          <div className="profile_creation--form_wrapper">
             <input
+              className="profile_creation--form_wrapper--input"
               type="text"
               name="firstName"
               placeholder="First Name"
@@ -49,17 +50,19 @@ export default class ProfileCreation extends Component {
               value={this.state.firstName}
             />
           </div>
-          <div>
+          <div className="profile_creation--form_wrapper">
             <input
+              className="profile_creation--form_wrapper--input"
               type="text"
               name="lastName"
-              placeholder="LastName"
+              placeholder="Last Name"
               onChange={this.handleChange}
               value={this.state.lastName}
             />
           </div>
-          <div>
+          <div className="profile_creation--form_wrapper">
             <input
+              className="profile_creation--form_wrapper--input"
               type="text"
               name="profilePicture"
               placeholder="Profile Picture (Optional)"
@@ -67,8 +70,9 @@ export default class ProfileCreation extends Component {
               value={this.state.profilePicture}
             />
           </div>
-          <div>
+          <div className="profile_creation--form_wrapper">
             <input
+              className="profile_creation--form_wrapper--input"
               type="text"
               name="biography"
               placeholder="Biography (Optional)"
@@ -76,8 +80,9 @@ export default class ProfileCreation extends Component {
               value={this.state.biography}
             />
           </div>
-          <div>
+          <div className="profile_creation--form_wrapper">
             <input
+              className="profile_creation--form_wrapper--input"
               type="text"
               name="github"
               placeholder="GitHub (Optional)"
@@ -85,8 +90,9 @@ export default class ProfileCreation extends Component {
               value={this.state.github}
             />
           </div>
-          <div>
+          <div className="profile_creation--form_wrapper">
             <input
+              className="profile_creation--form_wrapper--input"
               type="text"
               name="linkedin"
               placeholder="LinkedIn (Optional)"
@@ -94,8 +100,9 @@ export default class ProfileCreation extends Component {
               value={this.state.linkedin}
             />
           </div>
-          <div>
+          <div className="profile_creation--form_wrapper">
             <input
+              className="profile_creation--form_wrapper--input"
               type="text"
               name="dev"
               placeholder="Dev.to (Optional)"
@@ -103,8 +110,9 @@ export default class ProfileCreation extends Component {
               value={this.state.dev}
             />
           </div>
-          <div>
+          <div className="profile_creation--form_wrapper">
             <input
+              className="profile_creation--form_wrapper--input"
               type="text"
               name="stackoverflow"
               placeholder="StackOverflow (Optional)"
@@ -112,8 +120,9 @@ export default class ProfileCreation extends Component {
               value={this.state.stackoverflow}
             />
           </div>
-          <div>
+          <div className="profile_creation--form_wrapper">
             <input
+              className="profile_creation--form_wrapper--input"
               type="text"
               name="website"
               placeholder="Personal Website (Optional)"
@@ -121,10 +130,15 @@ export default class ProfileCreation extends Component {
               value={this.state.website}
             />
           </div>
-          <div>
-            <button onClick={this.handleSubmit}>Submit</button>
-          </div>
         </form>
+        <div className="profile_creation--button--wrapper">
+          <button
+            className="profile_creation--button_button"
+            onClick={this.handleSubmit}
+          >
+            Submit
+          </button>
+        </div>
       </div>
     );
   }
