@@ -6,58 +6,56 @@ import axios from "axios";
 // FIXME: => Remove the proxy before deployment
 
 class StoreClass {
-  constructor() {
-    this.warehouse = {
-      isLoggedIn: false,
-      userProfile: undefined
-    };
-    this.checkToken = this.checkToken.bind(this);
-    this.getUserProfile = this.getUserProfile.bind(this);
-  }
-  checkToken() {
+  checkToken = () => {
     if (localStorage.token) {
       const token = jwt_decode(localStorage.token);
       if (token.exp < Date.now() / 1000) {
-        this.warehouse.isLoggedIn = false;
         return false;
       } else {
-        this.warehouse.isLoggedIn = true;
         return true;
       }
     } else {
       return false;
     }
-  }
-  applyProxy(url) {
+  };
+  applyProxy = url => {
     return `http://localhost:8000${url}`;
-  }
-  register(data) {
+  };
+  register = data => {
     API.post(this.applyProxy("/api/auth/register"), data)
       .then(() => (window.location.href = "/login"))
       .catch(err => console.error(err.response.data));
-  }
-  login(data) {
+  };
+  login = data => {
+    localStorage.removeItem("token");
+    // FIXME: => Redirection to cached profile handle
     API.post(this.applyProxy("/api/auth/login"), data)
       .then(res => res.data)
       .then(data => {
         const { token } = data;
         localStorage.setItem("token", token);
-        this.checkToken();
-        window.location.href = "/create";
+        this.getUserProfile()
+          .then(
+            profile =>
+              (window.location.href = `/profile/${profile.data.handle}`)
+          )
+          .catch(err => (window.location.href = "/create"));
       })
       .catch(err => console.error(err.response.data));
-  }
-  async getUserProfile() {
-    const response = await API.get(this.applyProxy("/api/profile/current"));
-    const { status } = await response;
-    if (status === 200) {
-      this.warehouse.userProfile = response.data;
-      return true;
-    } else {
-      return false;
+  };
+  getUserProfile = async () => {
+    try {
+      const response = await axios.get(
+        this.applyProxy("/api/profile/current"),
+        { headers: { Authorization: localStorage.token } }
+      );
+      const { data } = await response;
+      return { data };
+    } catch (err) {
+      return { err };
     }
-  }
-  getProfile(handle, callback) {
+  };
+  getProfile = (handle, callback) => {
     axios
       .get(this.applyProxy(`/api/profile/get/${handle}`))
       .then(res => res.data)
@@ -67,8 +65,8 @@ class StoreClass {
         }
       })
       .catch(err => callback(err, null));
-  }
-  createProfile(data) {
+  };
+  createProfile = data => {
     API.post(this.applyProxy("/api/profile/create"), data)
       .then(res => res.data)
       .then(data => {
@@ -78,7 +76,7 @@ class StoreClass {
         }
       })
       .catch(err => console.error(err));
-  }
+  };
 }
 
 const Store = new StoreClass();
