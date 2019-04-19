@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Store from "../Store";
 
+// TODO: => Implement a redirection system if an user with a profile tries accessing this page
 export default class ProfileCreation extends Component {
   constructor() {
     super();
@@ -35,19 +36,6 @@ export default class ProfileCreation extends Component {
     Store.createProfile(data);
   };
   render() {
-    // FIXME: => Produce a better solution for the conditional render to avoid API calls once every darn state change...
-    Store.getUserProfile()
-      .then(result => {
-        if (result) {
-          window.location.href = `/profile/${
-            Store.warehouse.userProfile.handle
-          }`;
-        }
-      })
-      .catch(err => {
-        document.getElementsByClassName("profile_creation")[0].style.display =
-          "flex";
-      });
     return (
       <div className="profile_creation">
         <h1>Create your profile</h1>

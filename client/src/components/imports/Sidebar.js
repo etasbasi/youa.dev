@@ -25,6 +25,10 @@ export default function Sidebar(props) {
             <i className="sidebar_nav_list--item--icon fas fa-flag" />
             <p className="sidebar_nav_list--item--text">Reports</p>
           </li>
+          <li className="sidebar_nav_list--item" data-ref="sidebar_reports">
+            <i className="sidebar_nav_list--item--icon fas fa-cog" />
+            <p className="sidebar_nav_list--item--text">Settings</p>
+          </li>
         </ul>
       </div>
     );

@@ -1,14 +1,11 @@
 // eslint-disable-next-line
 import React, { Component } from "react";
 import adminCheck from "../utils/adminCheck";
-import Store from "../Store";
+// import Store from "../Store";
 import Sidebar from "./imports/Sidebar";
 import RedirectToPath from "../utils/RedirectToPath";
 
 class AdminDashboard extends Component {
-  componentDidMount() {
-    Store.getUserProfile();
-  }
   render() {
     if (adminCheck()) {
       return (
