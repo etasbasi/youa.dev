@@ -8,22 +8,20 @@ export default class Login extends Component {
       email: undefined,
       password: undefined
     };
-    this.onChange = this.onChange.bind(this);
-    this.onClick = this.onClick.bind(this);
   }
-  onChange(e) {
+  onChange = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
-  }
-  onClick() {
+  };
+  onClick = () => {
     const { email, password } = this.state;
     const data = {
       email,
       password
     };
     Store.login(data);
-  }
+  };
   render() {
     return (
       <div className="login">
