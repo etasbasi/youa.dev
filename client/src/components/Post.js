@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import showdown from "showdown";
 import Store from "../Store";
-
+import ReactMarkdown from "react-markdown";
 export default class Post extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +22,9 @@ export default class Post extends Component {
       return (
         <div className="post_page" id="post_page">
           <p>{this.state.post.title}</p>
-          <p>{this.state.post.body}</p>
+          <div className="post_page_output">
+            <ReactMarkdown source={this.state.post.body} />
+          </div>
         </div>
       );
     } else {
