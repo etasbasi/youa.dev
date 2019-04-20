@@ -2,7 +2,7 @@ import React, { Fragment, Component } from "react";
 import Store from "../Store";
 import ProfileDrawer from "./imports/ProfileDrawer";
 import Sidebar from "./imports/Sidebar";
-import isProfileOwner from "../utils/isProfileOwner";
+import isOwner from "../utils/isOwner";
 
 export default class Profile extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class Profile extends Component {
       <div className="profile_page">
         {this.state.data.profile ? (
           <Fragment>
-            {isProfileOwner(this.state.data.profile.user_id) ? (
+            {isOwner(this.state.data.profile.user_id) ? (
               <Fragment>
                 <Sidebar />
                 <ProfileDrawer
