@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Store from "../Store";
 import ReactMarkdown from "react-markdown";
+
 export default class Post extends Component {
   constructor(props) {
     super(props);
