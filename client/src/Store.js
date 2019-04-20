@@ -36,20 +36,15 @@ class StoreClass {
         { headers: { Authorization: localStorage.token } }
       );
       const { data } = await response;
-      return { data };
+      return data;
     } catch (err) {
-      return { err };
+      return err;
     }
   };
   getProfile = (handle, callback) => {
     axios
       .get(this.applyProxy(`/api/profile/get/${handle}`))
-      .then(res => res.data)
-      .then(data => {
-        if (data) {
-          callback(null, data);
-        }
-      })
+      .then(res => callback(null, res.data))
       .catch(err => callback(err, null));
   };
   createProfile = data => {
@@ -57,14 +52,14 @@ class StoreClass {
       .post(this.applyProxy("/api/profile/create"), data, {
         headers: { Authorization: localStorage.token }
       })
-      .then(res => res.data)
-      .then(data => {
-        if (data) {
-          console.log(data);
-          window.location.href = `/profile/${data.handle}`;
-        }
-      })
+      .then(res => (window.location.href = `/profile/${res.data.handle}`))
       .catch(err => console.error(err));
+  };
+  getPost = (handle, callback) => {
+    axios
+      .get(this.applyProxy(`/api/posts/get/${handle}`))
+      .then(res => callback(false, res.data))
+      .catch(err => callback(err, false));
   };
 }
 

@@ -5,6 +5,7 @@ import AdminDashboard from "./components/AdminDashboard";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
+import Post from "./components/Post";
 import ProfileCreation from "./components/ProfileCreation";
 
 // FIXME: => Move socket module to the components where chat will be accessible from
@@ -21,6 +22,7 @@ export default class App extends Component {
         <Route strict exact path="/login" component={Login} />
         <Route strict exact path="/create" component={ProfileCreation} />
         <Route strict exact path="/profile/:handle" component={Profile} />
+        <Route strict exact path="/post/:handle" component={Post} />
       </Router>
     );
   }
