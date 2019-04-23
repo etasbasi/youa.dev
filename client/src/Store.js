@@ -12,22 +12,31 @@ class StoreClass {
       .then(() => (window.location.href = "/login"))
       .catch(err => console.error(err.response.data));
   };
-  login = data => {
+  login = async data => {
     localStorage.removeItem("token");
-    axios
-      .post(this.applyProxy("/api/auth/login"), data)
-      .then(res => res.data)
-      .then(data => {
-        const { token } = data;
-        localStorage.setItem("token", token);
-        this.getUserProfile()
-          .then(
-            profile =>
-              (window.location.href = `/profile/${profile.data.handle}`)
-          )
-          .catch(err => (window.location.href = "/create"));
-      })
-      .catch(err => console.error(err.response.data));
+    try {
+      const res = await axios.post(this.applyProxy("/api/auth/login"), data);
+      const { token } = await res.data;
+      localStorage.setItem("token", token);
+    } catch (err) {
+      console.error(err.response.data);
+      return;
+    } finally {
+      try {
+        const profileRes = await axios.get(
+          this.applyProxy("/api/profile/current"),
+          { headers: { Authorization: localStorage.token } }
+        );
+        const { handle } = await profileRes.data;
+        window.location.href = `/profile/${handle}`;
+      } catch (err) {
+        if (err.response.status === 404) {
+          window.location.href = "/create";
+        } else {
+          window.location.href = "/register";
+        }
+      }
+    }
   };
   getUserProfile = async () => {
     try {
@@ -53,7 +62,7 @@ class StoreClass {
         headers: { Authorization: localStorage.token }
       })
       .then(res => (window.location.href = `/profile/${res.data.handle}`))
-      .catch(err => console.error(err));
+      .catch(err => console.error(err.response.data));
   };
   getPost = (handle, callback) => {
     axios

@@ -6,15 +6,15 @@ export default class ProfileCreation extends Component {
   constructor() {
     super();
     this.state = {
-      firstName: undefined,
-      lastName: undefined,
-      profilePicture: undefined,
-      biography: undefined,
-      github: undefined,
-      linkedin: undefined,
-      dev: undefined,
-      stackoverflow: undefined,
-      website: undefined
+      firstName: "",
+      lastName: "",
+      profilePicture: "",
+      biography: "",
+      github: "",
+      linkedin: "",
+      dev: "",
+      stackoverflow: "",
+      website: ""
     };
   }
   handleChange = e => {
@@ -33,6 +33,9 @@ export default class ProfileCreation extends Component {
       stackoverflow: this.state.stackoverflow,
       website: this.state.website
     };
+    for (let i in data) {
+      if (data[i] === "") data[i] = undefined;
+    }
     Store.createProfile(data);
   };
   render() {
