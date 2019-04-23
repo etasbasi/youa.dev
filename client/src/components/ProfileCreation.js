@@ -38,6 +38,13 @@ export default class ProfileCreation extends Component {
     }
     Store.createProfile(data);
   };
+  componentDidMount() {
+    Store.checkProfile().then(profile => {
+      if (profile) {
+        window.location.href = `/profile/${profile.handle}`;
+      }
+    });
+  }
   render() {
     return (
       <div className="profile_creation">

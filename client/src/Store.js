@@ -38,16 +38,18 @@ class StoreClass {
       }
     }
   };
-  getUserProfile = async () => {
+  checkProfile = async () => {
     try {
       const response = await axios.get(
         this.applyProxy("/api/profile/current"),
         { headers: { Authorization: localStorage.token } }
       );
-      const { data } = await response;
-      return data;
+      if (response.status === 200) {
+        const { data } = await response;
+        return data;
+      }
     } catch (err) {
-      return err;
+      return false;
     }
   };
   getProfile = (handle, callback) => {
