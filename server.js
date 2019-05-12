@@ -45,7 +45,7 @@ Database.authenticate()
   .catch(err => console.error("Connection refused. Error: ", err));
 
 // FIXME: => Enable only when needed
-Database.sync();
+Database.sync({ logging: false });
 
 // Server Init
 const server = require("http").Server(app);

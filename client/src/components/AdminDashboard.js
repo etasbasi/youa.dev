@@ -4,6 +4,7 @@ import adminCheck from "../utils/adminCheck";
 // import Store from "../Store";
 import Sidebar from "./imports/Sidebar";
 import RedirectToPath from "../utils/RedirectToPath";
+import ProfileDrawer from "./imports/ProfileDrawer";
 
 class AdminDashboard extends Component {
   render() {
@@ -11,6 +12,7 @@ class AdminDashboard extends Component {
       return (
         <div className="admin_dashboard">
           <Sidebar _super={true} />
+          <ProfileDrawer _super={true} />
           <div className="admin_dashboard_content">
             <h1 className="admin_dashboard_content_title">Dashboard</h1>
           </div>
