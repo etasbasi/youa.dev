@@ -11,8 +11,8 @@ class AdminDashboard extends Component {
     if (adminCheck()) {
       return (
         <div className="admin_dashboard">
-          <Sidebar _super={true} />
-          <ProfileDrawer _super={true} />
+          <Sidebar />
+          <ProfileDrawer />
           <div className="admin_dashboard_content">
             <h1 className="admin_dashboard_content_title">Dashboard</h1>
           </div>
