@@ -1,0 +1,37 @@
+.fourohfour {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(219deg, #2c1b72, #341b66, #306292);
+  background-size: 600% 600%;
+  -webkit-animation: gradientLoop 30s ease infinite;
+  -moz-animation: gradientLoop 30s ease infinite;
+  -o-animation: gradientLoop 30s ease infinite;
+  animation: gradientLoop 30s ease infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $secondaryColor;
+  font-family: $primaryFonts;
+  .fourohfour__heading {
+    font-size: 82px;
+  }
+  .fourohfour__message {
+    font-size: 42px;
+  }
+  .fourohfour__span {
+    position: absolute;
+    bottom: 25px;
+    font-size: 36px;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    transition: all ease-in-out 0.2s;
+    &:hover {
+      border-bottom-color: $secondaryColor;
+    }
+  }
+}
