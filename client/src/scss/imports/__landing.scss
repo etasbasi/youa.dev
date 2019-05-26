@@ -8,7 +8,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(270deg, #49113a, #61134c, #850e65);
+  background: linear-gradient(219deg, #2c1b72, #341b66, #306292);
   background-size: 600% 600%;
   -webkit-animation: gradientLoop 30s ease infinite;
   -moz-animation: gradientLoop 30s ease infinite;
@@ -17,12 +17,11 @@
   color: $secondaryColor;
   .landing_title {
     font-weight: lighter;
-    font-size: 50px;
+    font-size: 82px;
     margin: 0 0 15px 0;
   }
   .landing_motto {
-    font-size: 22px;
-    border-bottom: 1px solid $secondaryColor;
+    font-size: 42px;
   }
   .landing_get-started {
     position: fixed;
@@ -35,7 +34,7 @@
       text-decoration: none;
       color: $secondaryColor;
       margin: 10px 0;
-      font-size: 18px;
+      font-size: 36px;
       cursor: pointer;
       transition: all ease-in-out 0.2s;
       border-bottom: 1px solid transparent;
