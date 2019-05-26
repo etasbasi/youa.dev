@@ -21,10 +21,6 @@ export default function Sidebar(props) {
             <i className="sidebar_nav_list--item--icon fas fa-columns" />
             <p className="sidebar_nav_list--item--text">Dashboard</p>
           </li>
-          <li className="sidebar_nav_list--item" data-ref="sidebar_logs">
-            <i className="sidebar_nav_list--item--icon fas fa-comment" />
-            <p className="sidebar_nav_list--item--text">Posts</p>
-          </li>
           <li className="sidebar_nav_list--item" data-ref="sidebar_tickets">
             <i className="sidebar_nav_list--item--icon fas fa-envelope" />
             <p className="sidebar_nav_list--item--text">Messages</p>
