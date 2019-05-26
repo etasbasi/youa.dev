@@ -14,9 +14,12 @@ export default function Sidebar(props) {
             <i className="sidebar_nav_list--item--icon fas fa-home" />
             <p className="sidebar_nav_list--item--text">Home</p>
           </li>
-          <li className="sidebar_nav_list--item">
-            <i className="sidebar_nav_list--item--icon fas fa-rss-square" />
-            <p className="sidebar_nav_list--item--text">Feed</p>
+          <li
+            className="sidebar_nav_list--item"
+            onClick={() => (window.location.href = "/dashboard")}
+          >
+            <i className="sidebar_nav_list--item--icon fas fa-columns" />
+            <p className="sidebar_nav_list--item--text">Dashboard</p>
           </li>
           <li className="sidebar_nav_list--item" data-ref="sidebar_logs">
             <i className="sidebar_nav_list--item--icon fas fa-comment" />

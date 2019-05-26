@@ -75,7 +75,9 @@ export default class Register extends Component {
         <p className="register_form--account">
           Already have an account?
           <br />
-          Click here to log in.
+          <span onClick={() => (window.location.href = "/login")}>
+            Click here to log in.
+          </span>
         </p>
       </div>
     );

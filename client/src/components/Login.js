@@ -61,7 +61,9 @@ export default class Login extends Component {
         <p className="login_form--account">
           Don't have an account?
           <br />
-          Click here to register.
+          <span onClick={() => (window.location.href = "/register")}>
+            Click here to register.
+          </span>
         </p>
       </div>
     );
