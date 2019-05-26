@@ -1,13 +1,9 @@
 import jwt_decode from "jwt-decode";
 
-function isOwner(profileId) {
+export default profileId => {
   if (localStorage.token) {
-    const decoded = jwt_decode(localStorage.token);
-    if (profileId === decoded.id) {
-      return true;
-    }
+    const { id } = jwt_decode(localStorage.token);
+    if (profileId === id) return true;
   }
   return false;
-}
-
-export default isOwner;
+};
