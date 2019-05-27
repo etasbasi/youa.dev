@@ -8,11 +8,11 @@ export default function Navbar(props) {
       <div className="navbar__account" onClick={openDrawer}>
         <img
           className="navbar__account__picture"
-          src={props.profilePicture || "http://lorempixel.com/400/200/cats/"}
+          src={props.profilePicture}
           alt="Profile"
         />
         <p className="navbar__account__name">
-          {`${props.firstName} ${props.lastName}` || "Khan, the cat."}
+          {`${props.firstName} ${props.lastName}`}
         </p>
       </div>
     </div>

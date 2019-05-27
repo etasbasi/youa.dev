@@ -70,6 +70,14 @@ class StoreClass {
       .then(res => callback(false, res.data))
       .catch(err => callback(err, false));
   };
+  createPost = data => {
+    axios
+      .post(this.applyProxy("/api/posts/create"), data, {
+        headers: { Authorization: localStorage.token }
+      })
+      .then(post => console.log(post))
+      .catch(err => console.error(err));
+  };
 }
 
 const Store = new StoreClass();

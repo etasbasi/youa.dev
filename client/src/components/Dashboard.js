@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./imports/Navbar";
 import ProfileDrawer from "./imports/ProfileDrawer";
+import Sidebar from "./imports/Sidebar";
 import Store from "../Store";
 
 export default class Dashboard extends Component {
@@ -28,6 +29,7 @@ export default class Dashboard extends Component {
           firstName={this.state.firstName}
           lastName={this.state.lastName}
         />
+        <Sidebar handle={`/profile/${this.state.handle}`} />
       </div>
     );
   }

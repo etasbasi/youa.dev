@@ -34,9 +34,20 @@ export default function Sidebar(props) {
           </Fragment>
         ) : (
           <Fragment>
-            <li className="sidebar_nav_list--item">
+            <li
+              className="sidebar_nav_list--item"
+              onClick={() => (window.location.href = props.handle)}
+            >
               <i className="sidebar_nav_list--item--icon fas fa-home" />
               <p className="sidebar_nav_list--item--text">Home</p>
+            </li>
+            <li
+              className="sidebar_nav_list--item"
+              data-ref="sidebar_tickets"
+              onClick={() => (window.location.href = "/new-post")}
+            >
+              <i className="sidebar_nav_list--item--icon fas fa-plus-square" />
+              <p className="sidebar_nav_list--item--text">New Post</p>
             </li>
             <li
               className="sidebar_nav_list--item"

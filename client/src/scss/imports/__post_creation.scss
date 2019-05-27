@@ -1,0 +1,74 @@
+.editor {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .editor__controls {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    .editor__controls__title {
+      padding: 0.75rem 0;
+      border: none;
+      outline: 0;
+      border-bottom: 1px solid darken($secondaryColor, 25%);
+      font-family: $primaryFonts;
+      font-weight: bold;
+      color: darken($secondaryColor, 25%);
+      &::placeholder {
+        font-size: 14px;
+        font-weight: bold;
+        font-family: $primaryFonts;
+        color: darken($secondaryColor, 25%);
+        transition: all ease-in-out 0.2s;
+      }
+      &:focus {
+        &::placeholder {
+          color: transparent;
+        }
+      }
+    }
+    .editor__controls__textarea {
+      resize: none;
+      margin: 15px 0;
+      border: 1px solid darken($secondaryColor, 25%);
+      font-family: $primaryFonts;
+      font-weight: bold;
+      color: darken($secondaryColor, 25%);
+      border-radius: 5px;
+      padding: 0.75rem;
+      &::placeholder {
+        font-size: 14px;
+        font-weight: bold;
+        font-family: $primaryFonts;
+        color: darken($secondaryColor, 25%);
+        transition: all ease-in-out 0.2s;
+      }
+      &:focus {
+        outline: 0;
+        &::placeholder {
+          color: transparent;
+        }
+      }
+    }
+    .editor__controls__button {
+      border: none;
+      font-size: 18px;
+      font-weight: bold;
+      font-family: $secondaryFonts;
+      background: linear-gradient(219deg, #2c1b72, #341b66, #306292);
+      background-size: 600% 600%;
+      -webkit-animation: gradientLoop 30s ease infinite;
+      -moz-animation: gradientLoop 30s ease infinite;
+      -o-animation: gradientLoop 30s ease infinite;
+      animation: gradientLoop 30s ease infinite;
+      color: $secondaryColor;
+      padding: 0.75rem;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all ease-in-out 0.2s;
+    }
+  }
+}

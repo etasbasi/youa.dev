@@ -24,7 +24,7 @@ export default class Profile extends Component {
           <Fragment>
             {isOwner(this.state.data.profile.user_id) ? (
               <Fragment>
-                <Sidebar />
+                <Sidebar handle={`/profile/${this.state.handle}`} />
                 <ProfileDrawer
                   firstName={this.state.data.profile.firstName}
                   lastName={this.state.data.profile.lastName}
