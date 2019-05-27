@@ -1,4 +1,4 @@
-.login {
+.auth {
   padding: 0;
   margin: 0;
   font-family: $primaryFonts;
@@ -8,43 +8,49 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(270deg, #49113a, #61134c, #850e65);
+  background: linear-gradient(219deg, #2c1b72, #341b66, #306292);
   background-size: 600% 600%;
   -webkit-animation: gradientLoop 30s ease infinite;
   -moz-animation: gradientLoop 30s ease infinite;
   -o-animation: gradientLoop 30s ease infinite;
   animation: gradientLoop 30s ease infinite;
   color: $secondaryColor;
-  .login_form {
+  .auth_form--title {
+    font-size: 42px;
+    margin: 15px 0;
+  }
+  .auth_form {
+    border-radius: 5px;
     background-color: #fff;
     -webkit-box-shadow: 1px 0px 21px -7px rgba(119, 119, 119, 1);
     -moz-box-shadow: 1px 0px 21px -7px rgba(119, 119, 119, 1);
     box-shadow: 1px 0px 21px -7px rgba(119, 119, 119, 1);
-    .login_form--list {
+    .auth_form--list {
       padding: 2.5rem;
       list-style-type: none;
-      .login_form--list_item {
+      .auth_form--list_item {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-content: center;
         margin-bottom: 20px;
-        .login_form--list_icon {
+        .auth_form--list_icon {
           margin-right: 5px;
           font-size: 18px;
+          color: darken($secondaryColor, 25%);
         }
-        .login_form--list_input {
+        .auth_form--list_input {
           border: none;
           outline: 0;
-          border-bottom: 1px solid $secondaryColor;
+          border-bottom: 1px solid darken($secondaryColor, 25%);
           font-family: $primaryFonts;
           font-weight: bold;
-          color: darken($secondaryColor, 15%);
+          color: darken($secondaryColor, 25%);
           &::placeholder {
             font-size: 14px;
             font-weight: bold;
             font-family: $primaryFonts;
-            color: darken($secondaryColor, 15%);
+            color: darken($secondaryColor, 25%);
             transition: all ease-in-out 0.2s;
           }
           &:focus {
@@ -53,24 +59,36 @@
             }
           }
         }
-        .login_form--list_button {
+        .auth_form--list_button {
           outline: 0;
           border: none;
           font-size: 18px;
           font-weight: bold;
           font-family: $secondaryFonts;
-          background-color: lighten($primaryColor, 15%);
+          background: linear-gradient(219deg, #2c1b72, #341b66, #306292);
+          background-size: 600% 600%;
+          -webkit-animation: gradientLoop 30s ease infinite;
+          -moz-animation: gradientLoop 30s ease infinite;
+          -o-animation: gradientLoop 30s ease infinite;
+          animation: gradientLoop 30s ease infinite;
           color: $secondaryColor;
           padding: 0.75rem 3rem;
+          cursor: pointer;
+          border-radius: 5px;
+          transition: all ease-in-out 0.2s;
+          &:hover {
+            padding: 0.75rem 5rem;
+          }
         }
       }
     }
   }
-  .login_form--account {
+  .auth_form--account {
     text-align: center;
     align-items: center;
-    font-size: 18px;
+    font-size: 28px;
     font-weight: bold;
+    margin: 15px 0;
     span {
       cursor: pointer;
       transition: all ease-in-out 0.2s;
