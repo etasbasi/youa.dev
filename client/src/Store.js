@@ -32,8 +32,6 @@ class StoreClass {
       } catch (err) {
         if (err.response.status === 404) {
           window.location.href = "/create";
-        } else {
-          window.location.href = "/register";
         }
       }
     }

@@ -13,13 +13,8 @@ export default class Profile extends Component {
   }
   componentDidMount() {
     Store.getProfile(this.props.match.params.handle, (err, data) => {
-      if (err) {
-        console.error(err);
-      } else {
-        if (data) {
-          this.setState({ data });
-        }
-      }
+      if (err) window.location.href = "/404";
+      this.setState({ data });
     });
   }
   render() {
@@ -109,7 +104,7 @@ export default class Profile extends Component {
             </div>
           </Fragment>
         ) : (
-          <p>No Profile Found</p>
+          <p />
         )}
       </div>
     );
