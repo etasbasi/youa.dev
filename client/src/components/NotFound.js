@@ -11,7 +11,7 @@ export default function NotFound() {
         className="fourohfour__span"
         onClick={() => (window.location.href = "/dashboard")}
       >
-        Click here to return back to the dashboard.
+        Click here to return back home.
       </span>
     </div>
   );

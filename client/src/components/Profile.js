@@ -2,13 +2,14 @@ import React, { Fragment, Component } from "react";
 import Store from "../Store";
 import ProfileDrawer from "./imports/ProfileDrawer";
 import Sidebar from "./imports/Sidebar";
-import isOwner from "../utils/isOwner";
+import isLoggedIn from "../utils/isLoggedIn";
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: false
+      data: false,
+      user: false
     };
   }
   componentDidMount() {
@@ -16,19 +17,22 @@ export default class Profile extends Component {
       if (err) window.location.href = "/404";
       this.setState({ data });
     });
+    if (isLoggedIn()) {
+      Store.checkProfile().then(profile => this.setState({ user: profile }));
+    }
   }
   render() {
     return (
       <div className="profile_page">
         {this.state.data.profile ? (
           <Fragment>
-            {isOwner(this.state.data.profile.user_id) ? (
+            {this.state.user ? (
               <Fragment>
-                <Sidebar handle={`/profile/${this.state.handle}`} />
+                <Sidebar handle={`/profile/${this.state.user.handle}`} />
                 <ProfileDrawer
-                  firstName={this.state.data.profile.firstName}
-                  lastName={this.state.data.profile.lastName}
-                  profilePicture={this.state.data.profile.profilePicture}
+                  firstName={this.state.user.firstName}
+                  lastName={this.state.user.lastName}
+                  profilePicture={this.state.user.profilePicture}
                 />
               </Fragment>
             ) : (
@@ -92,9 +96,13 @@ export default class Profile extends Component {
               {this.state.data.posts.length > 0 ? (
                 this.state.data.posts.map(post => {
                   return (
-                    <div key={post.id} className="profile_posts--post">
+                    <div
+                      key={post.id}
+                      className="profile_posts--post"
+                      onClick={() => console.log(post.handle)}
+                    >
                       <p>{post.title}</p>
-                      <p>{post.body}</p>
+                      <p>{`Created at: ${post.createdAt.split("T")[0]}`}</p>
                     </div>
                   );
                 })

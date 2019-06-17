@@ -10,6 +10,7 @@ export default class Dashboard extends Component {
     this.state = {};
   }
   componentDidMount() {
+    document.getElementsByClassName("sidebar_nav")[0].style.display = "none";
     Store.checkProfile()
       .then(profile =>
         profile ? this.setState(profile) : (window.location.href = "/")

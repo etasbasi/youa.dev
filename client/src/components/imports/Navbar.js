@@ -1,11 +1,11 @@
 import React from "react";
-import openDrawer from "../../utils/openDrawer";
+import openSidebar from "../../utils/openSidebar";
 
 export default function Navbar(props) {
   return (
     <div id="navbar" className="navbar">
       <p className="navbar__logo">youa.dev</p>
-      <div className="navbar__account" onClick={openDrawer}>
+      <div className="navbar__account" onClick={openSidebar}>
         <img
           className="navbar__account__picture"
           src={props.profilePicture}

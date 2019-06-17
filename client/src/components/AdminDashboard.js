@@ -5,6 +5,7 @@ import Store from "../Store";
 import Sidebar from "./imports/Sidebar";
 import RedirectToPath from "../utils/RedirectToPath";
 import ProfileDrawer from "./imports/ProfileDrawer";
+import isLoggedIn from "../utils/isLoggedIn";
 
 class AdminDashboard extends Component {
   constructor() {
@@ -12,11 +13,13 @@ class AdminDashboard extends Component {
     this.state = {};
   }
   componentDidMount() {
-    Store.checkProfile()
-      .then(profile =>
-        profile ? this.setState(profile) : (window.location.href = "/")
-      )
-      .catch(err => console.error(err));
+    if (isLoggedIn()) {
+      Store.checkProfile()
+        .then(profile =>
+          profile ? this.setState(profile) : (window.location.href = "/")
+        )
+        .catch(err => console.error(err));
+    }
   }
 
   render() {
