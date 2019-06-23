@@ -99,7 +99,9 @@ export default class Profile extends Component {
                     <div
                       key={post.id}
                       className="profile_posts--post"
-                      onClick={() => console.log(post.handle)}
+                      onClick={() =>
+                        (window.location.href = `/post/${post.handle}`)
+                      }
                     >
                       <p>{post.title}</p>
                       <p>{`Created at: ${post.createdAt.split("T")[0]}`}</p>
