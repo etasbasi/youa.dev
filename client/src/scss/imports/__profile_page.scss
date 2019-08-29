@@ -57,12 +57,25 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    .profile_posts_header {
+      text-align: center;
+    }
     .profile_posts--post {
       margin: 5px 0;
-      border: 1px solid #999999;
+      background: linear-gradient(219deg, #2c1b72, #341b66, #306292);
+      background-size: 600% 600%;
+      -webkit-animation: gradientLoop 30s ease infinite;
+      -moz-animation: gradientLoop 30s ease infinite;
+      -o-animation: gradientLoop 30s ease infinite;
+      animation: gradientLoop 30s ease infinite;
+      color: $secondaryColor;
+      font-weight: bold;
       -webkit-box-shadow: 3px 3px 5px 0px rgba(153, 153, 153, 1);
       -moz-box-shadow: 3px 3px 5px 0px rgba(153, 153, 153, 1);
       box-shadow: 3px 3px 5px 0px rgba(153, 153, 153, 1);
+      p {
+        margin-left: 20px;
+      }
     }
   }
 }

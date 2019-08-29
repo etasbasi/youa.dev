@@ -92,7 +92,7 @@ export default class Profile extends Component {
               </div>
             </div>
             <div className="profile_posts">
-              <h1>Posts:</h1>
+              <h1 className="profile_posts_header">Posts:</h1>
               {this.state.data.posts.length > 0 ? (
                 this.state.data.posts.map(post => {
                   return (
