@@ -109,7 +109,7 @@ export default class Profile extends Component {
                   );
                 })
               ) : (
-                <p>User has no posts.</p>
+                <p style={{ textAlign: "center" }}>User has no posts.</p>
               )}
             </div>
           </Fragment>

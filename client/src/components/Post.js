@@ -50,6 +50,7 @@ export default class Post extends Component {
         )}
         {this.state.post ? (
           <React.Fragment>
+            <div className="post_page_img"></div>
             <p>{this.state.post.title}</p>
             <div className="post_page_output">
               <ReactMarkdown source={this.state.post.body} />
@@ -60,17 +61,5 @@ export default class Post extends Component {
         )}
       </div>
     );
-    // if (this.state.post) {
-    //   return (
-    //     <div className="post_page" id="post_page">
-    //     </div>
-    //   );
-    // } else {
-    //   return (
-    //     <div className="post_page" id="post_page">
-    //       <p>No post found.</p>
-    //     </div>
-    //   );
-    // }
   }
 }
