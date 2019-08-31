@@ -43,7 +43,7 @@ export default class Post extends Component {
               firstName={this.state.user.firstName}
               lastName={this.state.user.lastName}
             />
-            <Sidebar handle={`/profile/${this.state.handle}`} />
+            <Sidebar handle={`/profile/${this.state.user.handle}`} />
           </React.Fragment>
         ) : (
           ""
@@ -80,7 +80,9 @@ export default class Post extends Component {
                 </p>
               </div>
             </div>
-            <ReactMarkdown source={this.state.data.post.body} />
+            <div className="post_page_body">
+              <ReactMarkdown source={this.state.data.post.body} />
+            </div>
           </React.Fragment>
         ) : (
           <p>No post found</p>
