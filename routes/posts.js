@@ -3,6 +3,7 @@ const passport = require("passport");
 const inputValidation = require("../utils/validateInput");
 const toolkit = require("../utils/toolkit");
 const Post = require("../db/models/Post");
+const Profile = require("../db/models/Profile");
 const Comment = require("../db/models/Comment");
 const Like = require("../db/models/Like");
 
@@ -54,7 +55,11 @@ router.get("/get/:handle", (req, res) => {
   })
     .then(post => {
       if (post) {
-        return toolkit.handler(req, res, 200, post);
+        Profile.findOne({ where: { user_id: post.user_id } }).then(profile => {
+          if (profile) {
+            return toolkit.handler(req, res, 200, { profile, post });
+          }
+        });
       } else {
         return toolkit.handler(req, res, 404, "Post not found.");
       }

@@ -10,16 +10,16 @@ export default class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      post: false,
+      data: false,
       user: false
     };
   }
   componentDidMount = () => {
-    Store.getPost(this.props.match.params.handle, (err, post) => {
+    Store.getPost(this.props.match.params.handle, (err, data) => {
       if (err) {
         console.error(err);
       } else {
-        this.setState({ post });
+        this.setState({ data });
       }
     });
     if (isLoggedIn()) {
@@ -48,13 +48,39 @@ export default class Post extends Component {
         ) : (
           ""
         )}
-        {this.state.post ? (
+        {this.state.data.post ? (
           <React.Fragment>
             <div className="post_page_img"></div>
-            <p>{this.state.post.title}</p>
-            <div className="post_page_output">
-              <ReactMarkdown source={this.state.post.body} />
+            <div className="post_page_titlebar">
+              <img
+                src={this.state.data.profile.profilePicture}
+                alt="Profile"
+                className="post_page_titlebar_img"
+                onClick={() =>
+                  (window.location.href = `/profile/${this.state.data.profile.handle}`)
+                }
+                style={{ cursor: "pointer" }}
+              />
+              <div className="post_page_titlebar_text-wrapper">
+                <p className="post_page_titlebar_title">
+                  {this.state.data.post.title}
+                </p>
+                <p
+                  className="post_page_titlebar_user"
+                  onClick={() =>
+                    (window.location.href = `/profile/${this.state.data.profile.handle}`)
+                  }
+                  style={{ cursor: "pointer" }}
+                >
+                  {this.state.data.profile.firstName}{" "}
+                  {this.state.data.profile.lastName}
+                </p>
+                <p className="post_page_titlebar_timestamp">
+                  {this.state.data.post.createdAt.split("T")[0]}
+                </p>
+              </div>
             </div>
+            <ReactMarkdown source={this.state.data.post.body} />
           </React.Fragment>
         ) : (
           <p>No post found</p>
