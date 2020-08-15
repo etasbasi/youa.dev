@@ -20,6 +20,12 @@ body {
   height: 100vh;
 }
 
+.main_container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
 .open {
   display: flex !important;
 }

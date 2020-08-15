@@ -1,15 +1,18 @@
 import React from "react";
 import openSidebar from "../../utils/openSidebar";
-import isLoggedIn from "../../utils/isLoggedIn";
+import { NavLink } from "react-router-dom";
 
-export default function Navbar(props) {
+export default function Navbar({
+  isLoggedIn,
+  profilePicture,
+  firstName,
+  lastName
+}) {
   return (
     <div id="navbar" className="navbar">
       <p
         className="navbar__logo"
-        onClick={() =>
-          (window.location.href = isLoggedIn() ? "/dashboard" : "/")
-        }
+        onClick={() => (window.location.href = isLoggedIn ? "/dashboard" : "/")}
         style={{ cursor: "pointer" }}
       >
         youa.dev
@@ -17,18 +20,18 @@ export default function Navbar(props) {
       <div
         className="navbar__account"
         onClick={
-          isLoggedIn() ? openSidebar : () => (window.location.href = "/login")
+          isLoggedIn ? openSidebar : () => (window.location.href = "/login")
         }
       >
-        {isLoggedIn() ? (
+        {isLoggedIn ? (
           <React.Fragment>
             <img
               className="navbar__account__picture"
-              src={props.profilePicture}
+              src={profilePicture}
               alt="Profile"
             />
             <p className="navbar__account__name">
-              {`${props.firstName} ${props.lastName}`}
+              {`${firstName} ${lastName}`}
             </p>
           </React.Fragment>
         ) : (

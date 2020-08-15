@@ -3,16 +3,16 @@ import axios from "axios";
 // FIXME: => Remove the proxy before deployment
 
 class StoreClass {
-  applyProxy = url => {
-    return `http://localhost:8000${url}`;
+  applyProxy = (url) => {
+    return `http://localhost:5000${url}`;
   };
-  register = data => {
+  register = (data) => {
     axios
       .post(this.applyProxy("/api/auth/register"), data)
       .then(() => (window.location.href = "/login"))
-      .catch(err => console.error(err.response.data));
+      .catch((err) => console.error(err.response.data));
   };
-  login = async data => {
+  login = async (data) => {
     localStorage.removeItem("token");
     try {
       const res = await axios.post(this.applyProxy("/api/auth/login"), data);
@@ -44,6 +44,7 @@ class StoreClass {
       );
       if (response.status === 200) {
         const { data } = await response;
+        console.log(data);
         return data;
       }
     } catch (err) {
@@ -53,30 +54,30 @@ class StoreClass {
   getProfile = (handle, callback) => {
     axios
       .get(this.applyProxy(`/api/profile/get/${handle}`))
-      .then(res => callback(null, res.data))
-      .catch(err => callback(err, null));
+      .then((res) => callback(null, res.data))
+      .catch((err) => callback(err, null));
   };
-  createProfile = data => {
+  createProfile = (data) => {
     axios
       .post(this.applyProxy("/api/profile/create"), data, {
         headers: { Authorization: localStorage.token }
       })
-      .then(res => (window.location.href = `/profile/${res.data.handle}`))
-      .catch(err => console.error(err.response.data));
+      .then((res) => (window.location.href = `/profile/${res.data.handle}`))
+      .catch((err) => console.error(err.response.data));
   };
   getPost = (handle, callback) => {
     axios
       .get(this.applyProxy(`/api/posts/get/${handle}`))
-      .then(res => callback(false, res.data))
-      .catch(err => callback(err, false));
+      .then((res) => callback(false, res.data))
+      .catch((err) => callback(err, false));
   };
-  createPost = data => {
+  createPost = (data) => {
     axios
       .post(this.applyProxy("/api/posts/create"), data, {
         headers: { Authorization: localStorage.token }
       })
-      .then(post => console.log(post))
-      .catch(err => console.error(err));
+      .then((post) => console.log(post))
+      .catch((err) => console.error(err));
   };
 }
 

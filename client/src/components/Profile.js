@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from "react";
-import Store from "../Store";
 import ProfileDrawer from "./imports/ProfileDrawer";
-import Sidebar from "./imports/Sidebar";
+
+import Store from "../Store";
 import isLoggedIn from "../utils/isLoggedIn";
 
 export default class Profile extends Component {
@@ -18,17 +18,27 @@ export default class Profile extends Component {
       this.setState({ data });
     });
     if (isLoggedIn()) {
-      Store.checkProfile().then(profile => this.setState({ user: profile }));
+      Store.checkProfile().then((profile) => this.setState({ user: profile }));
     }
   }
   render() {
+    // let {
+    //   firstName,
+    //   lastName,
+    //   profilePicture,
+    //   biography,
+    //   github,
+    //   linkedin,
+    //   stackoverflow,
+    //   dev,
+    //   website
+    // } = this.props;
     return (
       <div className="profile_page">
         {this.state.data.profile ? (
           <Fragment>
             {this.state.user ? (
               <Fragment>
-                <Sidebar handle={`/profile/${this.state.user.handle}`} />
                 <ProfileDrawer
                   firstName={this.state.user.firstName}
                   lastName={this.state.user.lastName}
@@ -94,7 +104,7 @@ export default class Profile extends Component {
             <div className="profile_posts">
               <h1 className="profile_posts_header">Posts:</h1>
               {this.state.data.posts.length > 0 ? (
-                this.state.data.posts.map(post => {
+                this.state.data.posts.map((post) => {
                   return (
                     <div
                       key={post.id}

@@ -1,6 +1,5 @@
 .sidebar_nav {
   z-index: 999;
-  position: fixed;
   left: 0%;
   height: 100%;
   width: 170px;
@@ -16,11 +15,12 @@
     margin: 0;
     padding: 0;
     width: 100%;
-    font-family: $primaryFonts;
-    color: $secondaryColor;
-    font-weight: bold;
     list-style-type: none;
     .sidebar_nav_list--item {
+      font-weight: bold;
+      font-family: $primaryFonts;
+      color: $secondaryColor;
+      text-decoration: none;
       width: 100%;
       display: flex;
       flex-direction: row;
@@ -31,7 +31,7 @@
       cursor: pointer;
       .sidebar_nav_list--item--icon {
         font-size: 22px;
-        margin-right: 5px;
+        margin-right: 15px;
         margin-left: 15px;
       }
       &:hover {
